@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { KappTable, fetchKapps } from '@kineticdata/react';
+import { KappTable } from '@kineticdata/react';
 import { WallySpinner } from './Loading';
 
 export const NameCell = ({ row }) => (
@@ -9,24 +9,14 @@ export const NameCell = ({ row }) => (
   </li>
 );
 
-export const TableLayout = ({ body }) => body;
-
 export const Body = ({ tableRows }) => <ul>{tableRows}</ul>;
 
-export const BodyRow = ({ cells }) => cells;
-
 export const KappList = props => {
-  const [{ kapps, error }, setKapps] = useState({});
-
   useEffect(() => {
-    if (!props.private) {
-      fetchKapps({
-        public: !props.private,
-      }).then(setKapps);
-    }
-  }, [props.private]);
+    props.setCrumbs([]);
+  }, [props.setCrumbs]);
 
-  return props.private ? (
+  return (
     <KappTable
       alterColumns={{
         name: {
@@ -35,7 +25,7 @@ export const KappList = props => {
           },
         },
       }}
-      components={{ TableLayout, Body, BodyRow }}
+      components={{ Body }}
       columnSet={['name']}
       omitHeader={true}
     >
@@ -46,20 +36,5 @@ export const KappList = props => {
         </>
       )}
     </KappTable>
-  ) : kapps ? (
-    <Fragment>
-      <h1>Kapps</h1>
-      <ul>
-        {kapps.map(kapp => (
-          <li key={kapp.slug}>
-            <Link to={`/kapps/${kapp.slug}/forms`}>{kapp.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </Fragment>
-  ) : error ? (
-    <pre>{JSON.stringify(error)}</pre>
-  ) : (
-    <WallySpinner />
   );
 };
