@@ -3,8 +3,9 @@ import './App.css';
 import { KineticLib, logout, fetchSpace } from '@kineticdata/react';
 import { history } from './index';
 import { PrivateFacing } from './PrivateFacing';
-import { WallySpinner } from './pages/Loading';
-import { Login } from './pages/Login';
+import { WallySpinner } from './components/Loading';
+import { Login } from './components/Login';
+import { Header } from './components/Header';
 
 export const appLogout = () => logout(() => history.push('/'));
 
@@ -17,11 +18,15 @@ export const BodyRow = ({ cells }) => <tr>{cells}</tr>;
 export const EmptyBodyRow = () => <WallySpinner />;
 
 export const App = () => {
-  // const [{ space, error }, setSpace] = useState();
-
-  // useEffect(() => {
-  //   fetchSpace().then(setSpace);
-  // }, []);
+  // fetch and set space
+  const [space, setSpace] = useState();
+  useEffect(() => {
+    async function fetchSpaceRequest() {
+      let response = await fetchSpace();
+      setSpace(response.space);
+    }
+    fetchSpaceRequest();
+  }, []);
 
   return (
     <KineticLib
@@ -30,14 +35,7 @@ export const App = () => {
     >
       {({ initialized, loggedIn, loginProps, timedOut }) => (
         <>
-          <header className="public">
-            <h1>Public</h1>
-            {loggedIn && (
-              <div className="buttons">
-                <button onClick={appLogout}>Logout</button>
-              </div>
-            )}
-          </header>
+          <Header space={space} loggedIn={loggedIn} />
           {!initialized ? (
             <WallySpinner />
           ) : loggedIn ? (

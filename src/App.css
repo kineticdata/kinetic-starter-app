@@ -21,7 +21,7 @@ header.private {
   background-color: lightcoral;
 }
 header.public {
-  background-color: lightblue;
+  background-color: #f36c24;
 }
 header h1 {
   color: white;
@@ -34,6 +34,11 @@ header a {
 }
 header .buttons {
   margin-left: auto;
+}
+
+.header-logo {
+  width: 12em;
+  margin-right: 3em;
 }
 
 /* Main */

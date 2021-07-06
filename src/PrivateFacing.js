@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
-import { Form } from './pages/Form';
-import { FormList } from './pages/FormList';
-import { KappList } from './pages/KappList';
-import { SubmissionList } from './pages/SubmissionList';
-import { NotFound } from './pages/NotFound';
+import { Form } from './components/Form';
+import { FormList } from './components/FormList';
+import { KappList } from './components/KappList';
+import { SubmissionList } from './components/SubmissionList';
+import { NotFound } from './components/NotFound';
+import { Profile } from './components/Profile';
 
 export const PrivateFacing = () => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
@@ -26,6 +27,11 @@ export const PrivateFacing = () => {
       </nav>
       <main>
         <Switch>
+          <Route
+            path="/profile"
+            render={() => <Profile setCrumbs={setBreadcrumbs} />}
+            exact
+          />
           <Route
             path={['/', '/kapps']}
             render={() => <KappList setCrumbs={setBreadcrumbs} />}

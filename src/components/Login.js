@@ -42,9 +42,6 @@ export const Login = ({
             Login
           </button>
         </form>
-        <button disabled={pending} onClick={appLogout}>
-          Cancel
-        </button>
       </span>
     </div>
   );
