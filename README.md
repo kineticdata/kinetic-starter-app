@@ -1,12 +1,6 @@
-# Auth Playground
+# Kinetic Starter App
 
-This project is meant to serve as a reference implementation for leveraging the authentication features provided by
-@kineticdata/react. It is meant to show how all aspects of the authentication process like form-based login, SSO
-redirects, SSO popups, timeouts and retries, and more.
-
-Exposing public pages is also a non-trivial use case that our bundle uses out of the box and introduces client-side
-routing into the mix. Because we do not want to incorporate a router into @kineticdata/react the bundle needs to solve
-that portion of the problem.
+This project is meant to be a no frills starting point for kinetic app bundle development. The bundle exposing public pages is also a non-trivial use case that our bundle uses out of the box and introduces client-side routing into the mix. 
 
 ## KineticLib Component
 

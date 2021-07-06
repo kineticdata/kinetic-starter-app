@@ -1,11 +1,24 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { searchSubmissions, SubmissionSearch } from "@kineticdata/react";
-import { WallySpinner } from "./Loading";
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { searchSubmissions, SubmissionSearch } from '@kineticdata/react';
+import { WallySpinner } from './Loading';
 
-export const SubmissionList = () => {
+export const SubmissionList = props => {
   const [submissions, setSubmissions] = useState(null);
   const { kappSlug, formSlug } = useParams();
+
+  useEffect(() => {
+    props.setCrumbs([
+      {
+        path: '/kapps',
+        name: 'Kapps',
+      },
+      {
+        path: `/kapps/${kappSlug}/forms`,
+        name: 'Forms',
+      },
+    ]);
+  }, [props.setCrumbs]);
 
   useEffect(() => {
     async function fetchSubmissionsWrapper() {
@@ -20,16 +33,18 @@ export const SubmissionList = () => {
     }
     fetchSubmissionsWrapper();
   }, []);
-  
+
   return submissions ? (
     <Fragment>
       <h1>Submissions</h1>
       <ul>
         {submissions.map(submission => (
           <li key={submission.id}>
-            <Link to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${submission.id}${
-              submission.coreState !== "Draft" ? "?mode=review" : ""
-            }`}>
+            <Link
+              to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${
+                submission.id
+              }${submission.coreState !== 'Draft' ? '?mode=review' : ''}`}
+            >
               #{submission.handle} - {submission.form.name}
             </Link>
           </li>
