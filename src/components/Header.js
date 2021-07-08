@@ -1,39 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { logout } from '@kineticdata/react';
 import kineticLogo from '../assets/kinetic-logo.png';
+import { Link } from 'react-router-dom';
 import { Dropdown, DropdownToggle, DropdownMenu, NavItem } from 'reactstrap';
 
-// Dropdown menu in progress
-const HeaderDropdownMenu = ({}) => {
+// Dropdown menu with user info, link to profile page, and logout
+const HeaderDropdownMenu = ({ profile }) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <NavItem>
       <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle role="button">Header Dropdown</DropdownToggle>
+        <DropdownToggle role="button">
+          {/* <span className="fa fa-caret-down" /> */}
+          {profile ? profile.displayName : 'Menu'}
+        </DropdownToggle>
         <DropdownMenu right className="profile-menu">
           <div className="profile-header">
             <h6>
-              displayName
+              {profile ? profile.displayName : 'Username'}
               <br />
-              <small>email</small>
+              <small>{profile ? profile.email : 'Email'}</small>
             </h6>
           </div>
           <div className="profile-links">
-            <div className="dropdown-divider" role="none" />
-            <a
-              href="/profile"
-              className="dropdown-item"
-              onClick={toggle}
-              role="menuitem"
-            >
-              <button>View Profile</button>
-            </a>
-            <div className="dropdown-divider" role="none" />
-            <button onClick={logout} className="dropdown-item" role="menuitem">
+            <Link to="/profile" className="dropdown-item" onClick={toggle}>
+              View Profile
+            </Link>
+            <Link to="/" onClick={logout} className="dropdown-item">
               Logout
-            </button>
+            </Link>
           </div>
         </DropdownMenu>
       </Dropdown>
@@ -41,21 +38,16 @@ const HeaderDropdownMenu = ({}) => {
   );
 };
 
-export const Header = ({ space, loggedIn }) => (
+export const Header = ({ space, loggedIn, profile }) => (
   <header className="public">
-    <img
-      src={kineticLogo}
-      className="header-logo"
-      alt="Kinetic Data logo"
-      onClick={() => console.log('clicked logo')}
-    />
-    <h1 onClick={() => console.log('clicked header')}>
-      {space ? space.name : 'Public'}
-    </h1>
+    <Link to="/">
+      <img src={kineticLogo} className="header-logo" alt="Kinetic Data logo" />
+    </Link>
+    <h1>{space ? space.name : 'Public'}</h1>
     {loggedIn && (
       <div className="buttons">
-        {/* <HeaderDropdownMenu /> */}
-        <button onClick={logout}>Logout</button>
+        <HeaderDropdownMenu profile={profile} />
+        {/* <button onClick={logout}>Logout</button> */}
       </div>
     )}
   </header>

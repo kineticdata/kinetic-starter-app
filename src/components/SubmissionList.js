@@ -1,10 +1,22 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { searchSubmissions, SubmissionSearch } from '@kineticdata/react';
-import { WallySpinner } from './Loading';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { SubmissionTable } from '@kineticdata/react';
+import { useParams } from 'react-router';
+import * as TableComponents from './TableComponents';
+
+export const HandleCell = ({ row }) => (
+  <td>
+    {row.get('handle')} - {row.getIn(['form', 'name'])}
+  </td>
+);
+
+export const ActionsCell = ({ tableOptions: { kappSlug }, row }) => (
+  <td>
+    <Link to={`/kapps/${kappSlug}/forms/${row.get('slug')}`}>submit new</Link>
+  </td>
+);
 
 export const SubmissionList = props => {
-  const [submissions, setSubmissions] = useState(null);
   const { kappSlug, formSlug } = useParams();
 
   useEffect(() => {
@@ -20,38 +32,38 @@ export const SubmissionList = props => {
     ]);
   }, [props.setCrumbs]);
 
-  useEffect(() => {
-    async function fetchSubmissionsWrapper() {
-      const { submissions } = await searchSubmissions({
-        kapp: kappSlug,
-        search: new SubmissionSearch().build(),
-        form: formSlug,
-        public: true,
-        include: 'form',
-      });
-      setSubmissions(submissions);
-    }
-    fetchSubmissionsWrapper();
-  }, []);
-
-  return submissions ? (
-    <Fragment>
-      <h1>Submissions</h1>
-      <ul>
-        {submissions.map(submission => (
-          <li key={submission.id}>
-            <Link
-              to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${
-                submission.id
-              }${submission.coreState !== 'Draft' ? '?mode=review' : ''}`}
-            >
-              #{submission.handle} - {submission.form.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </Fragment>
-  ) : (
-    <WallySpinner />
+  return (
+    <SubmissionTable
+      kappSlug={kappSlug}
+      formSlug={formSlug}
+      columnSet={['handle', 'actions']}
+      components={{ ...TableComponents }}
+      addColumns={[
+        {
+          value: 'actions',
+          components: {
+            BodyCell: ActionsCell,
+          },
+        },
+      ]}
+      alterColumns={{
+        handle: {
+          components: {
+            BodyCell: HandleCell,
+          },
+        },
+      }}
+      // omitHeader={true}
+    >
+      {({ pagination, table }) => (
+        <>
+          <h1>Submissions</h1>
+          <div>
+            {table}
+            {pagination}
+          </div>
+        </>
+      )}
+    </SubmissionTable>
   );
 };

@@ -41,6 +41,17 @@ header .buttons {
   margin-right: 3em;
 }
 
+.dropdown-item {
+  color: rgb(54, 55, 56);
+  line-height: 1.42857143;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(54, 55, 56);
+  color: white;
+}
+
 /* Main */
 main {
   padding: 1rem;
@@ -94,6 +105,20 @@ button {
 }
 
 /* Table */
+
+.table-container {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+}
+
+th {
+  background-color: white;
+  text-align: left;
+}
+
 tr:nth-child(odd) {
   background-color: lightgray;
 }
@@ -109,4 +134,44 @@ td {
 
 .breadcrumbs > li > a {
   margin: 0.25rem;
+}
+
+/* Profile */
+.profile-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  color: rgb(9, 84, 130);
+}
+
+.profile menu a {
+  color: rgb(9, 84, 130);
+  text-decoration: none;
+}
+
+.profile-header {
+  background-color: white;
+}
+
+.profile-header h6 {
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+}
+.profile-header small {
+  color: rgb(54, 55, 56);
+}
+
+.profile-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-links a,
+.profile-links button {
+  color: rgb(54, 55, 56);
+}
+
+.profile-links a:hover,
+.profile-links button:hover {
+  background-color: rgb(178, 179, 181);
 }
