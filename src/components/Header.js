@@ -1,61 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { logout } from '@kineticdata/react';
 import kineticLogo from '../assets/kinetic-logo.png';
-import { Dropdown, DropdownToggle, DropdownMenu, NavItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
-// Dropdown menu in progress
-const HeaderDropdownMenu = ({}) => {
-  const [isOpen, setIsOpen] = useState(true);
+// Dropdown menu with user info, link to profile page, and logout
+const HeaderDropdownMenu = ({ profile }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <NavItem>
-      <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle role="button">Header Dropdown</DropdownToggle>
-        <DropdownMenu right className="profile-menu">
-          <div className="profile-header">
-            <h6>
-              displayName
-              <br />
-              <small>email</small>
-            </h6>
-          </div>
-          <div className="profile-links">
-            <div className="dropdown-divider" role="none" />
-            <a
-              href="/profile"
-              className="dropdown-item"
-              onClick={toggle}
-              role="menuitem"
-            >
-              <button>View Profile</button>
-            </a>
-            <div className="dropdown-divider" role="none" />
-            <button onClick={logout} className="dropdown-item" role="menuitem">
-              Logout
-            </button>
-          </div>
-        </DropdownMenu>
-      </Dropdown>
-    </NavItem>
+    <Dropdown isOpen={isOpen} toggle={toggle}>
+      <DropdownToggle role="button" className="profile-menu-button">
+        {/* <span className="fa fa-caret-down" /> */}
+        {profile ? profile.displayName : 'Menu'}
+      </DropdownToggle>
+      <DropdownMenu
+        right
+        className={`profile-menu profile-menu-${isOpen ? 'open' : 'closed'}`}
+      >
+        <div className="profile-menu-header">
+          <h5>
+            {profile ? profile.displayName : 'Username'}
+            <br />
+            <small>{profile ? profile.email : 'Email'}</small>
+          </h5>
+        </div>
+        <div className="profile-menu-links">
+          <Link to="/profile" className="profile-menu-link" onClick={toggle}>
+            View/Edit Profile
+          </Link>
+          <Link to="/" onClick={logout} className="profile-menu-link">
+            Logout
+          </Link>
+        </div>
+      </DropdownMenu>
+    </Dropdown>
   );
 };
 
-export const Header = ({ space, loggedIn }) => (
+export const Header = ({ space, loggedIn, profile }) => (
   <header className="public">
-    <img
-      src={kineticLogo}
-      className="header-logo"
-      alt="Kinetic Data logo"
-      onClick={() => console.log('clicked logo')}
-    />
-    <h1 onClick={() => console.log('clicked header')}>
-      {space ? space.name : 'Public'}
-    </h1>
+    <Link to="/">
+      <img src={kineticLogo} className="header-logo" alt="Kinetic Data logo" />
+    </Link>
+    <h1>{space ? space.name : 'Public'}</h1>
     {loggedIn && (
       <div className="buttons">
-        {/* <HeaderDropdownMenu /> */}
-        <button onClick={logout}>Logout</button>
+        <HeaderDropdownMenu profile={profile} />
+        {/* <button onClick={logout}>Logout</button> */}
       </div>
     )}
   </header>
