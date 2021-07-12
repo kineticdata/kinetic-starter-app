@@ -2,39 +2,40 @@ import React, { useState } from 'react';
 import { logout } from '@kineticdata/react';
 import kineticLogo from '../assets/kinetic-logo.png';
 import { Link } from 'react-router-dom';
-import { Dropdown, DropdownToggle, DropdownMenu, NavItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 // Dropdown menu with user info, link to profile page, and logout
 const HeaderDropdownMenu = ({ profile }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <NavItem>
-      <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle role="button">
-          {/* <span className="fa fa-caret-down" /> */}
-          {profile ? profile.displayName : 'Menu'}
-        </DropdownToggle>
-        <DropdownMenu right className="profile-menu">
-          <div className="profile-header">
-            <h6>
-              {profile ? profile.displayName : 'Username'}
-              <br />
-              <small>{profile ? profile.email : 'Email'}</small>
-            </h6>
-          </div>
-          <div className="profile-links">
-            <Link to="/profile" className="dropdown-item" onClick={toggle}>
-              View Profile
-            </Link>
-            <Link to="/" onClick={logout} className="dropdown-item">
-              Logout
-            </Link>
-          </div>
-        </DropdownMenu>
-      </Dropdown>
-    </NavItem>
+    <Dropdown isOpen={isOpen} toggle={toggle}>
+      <DropdownToggle role="button" className="profile-menu-button">
+        {/* <span className="fa fa-caret-down" /> */}
+        {profile ? profile.displayName : 'Menu'}
+      </DropdownToggle>
+      <DropdownMenu
+        right
+        className={`profile-menu profile-menu-${isOpen ? 'open' : 'closed'}`}
+      >
+        <div className="profile-menu-header">
+          <h5>
+            {profile ? profile.displayName : 'Username'}
+            <br />
+            <small>{profile ? profile.email : 'Email'}</small>
+          </h5>
+        </div>
+        <div className="profile-menu-links">
+          <Link to="/profile" className="profile-menu-link" onClick={toggle}>
+            View/Edit Profile
+          </Link>
+          <Link to="/" onClick={logout} className="profile-menu-link">
+            Logout
+          </Link>
+        </div>
+      </DropdownMenu>
+    </Dropdown>
   );
 };
 

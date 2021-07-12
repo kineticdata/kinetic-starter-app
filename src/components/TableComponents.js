@@ -1,14 +1,23 @@
 import React, { Fragment } from 'react';
 import { isImmutable } from 'immutable';
 import { Link } from 'react-router-dom';
-// import { LoadingMessage } from '@kineticdata/bundle-common';
-import { I18n } from '@kineticdata/react';
+
+// allows tables to define the fields desired for filtering / see SubmissionsList
+export const generateFilterFormLayout = filterSet => ({ buttons, fields }) => (
+  <Fragment>
+    {filterSet.map(fs => (
+      <Fragment key={fs}>{fields.get(fs)}</Fragment>
+    ))}
+    {buttons}
+  </Fragment>
+);
 
 const isFiltering = appliedFilters =>
   appliedFilters.some(
     filterValue => isImmutable(filterValue) && filterValue.get('value') !== '',
   );
 
+// default state for tables with no / missing data
 export const generateEmptyBodyRow = ({
   loadingMessage = 'Loading items...',
   noSearchResultsMessage = 'No items were found - please modify your search criteria',
@@ -25,30 +34,27 @@ export const generateEmptyBodyRow = ({
   const content = props.loading ? (
     /* Visible if there are no items in the list and your table is loading or initializing data. */
 
-    <td colSpan={props.colSpan}>
-      {/* <LoadingMessage title={loadingMessage} /> */}
-      Loading...
-    </td>
+    <td colSpan={props.colSpan}>Loading...</td>
   ) : props.error ? (
     props.error.message ? (
-      <td colSpan={props.colSpan}>
-        <em>
-          {errorMessage} <br /> <small>({props.error.message})</small>
-        </em>
+      <td colSpan={props.colSpan} className="table-error-message">
+        {errorMessage} <br /> <small>({props.error.message})</small>
       </td>
     ) : (
-      <td colSpan={props.colSpan}>
-        <em>{errorMessage}</em>
+      <td colSpan={props.colSpan} className="table-error-message">
+        {errorMessage}
       </td>
     )
   ) : isFiltering(props.appliedFilters) ? (
     /* Visible if there are no items in the list and you have filter criteria */
 
-    <em className="no-data__title">{noSearchResultsMessage}</em>
+    <td className="no-data__title table-error-message">
+      {noSearchResultsMessage}
+    </td>
   ) : (
     /* Visible if there are no items in the list and you are not searching */
     <>
-      <em className="no-data__title">{noItemsMessage}</em>
+      <td className="no-data__title table-error-message">{noItemsMessage}</td>
       {addAuthorized && noItemsLinkTo ? (
         typeof noItemsLinkTo === 'function' ? (
           <button className="btn btn-link" onClick={noItemsLinkTo}>
@@ -66,25 +72,10 @@ export const generateEmptyBodyRow = ({
   return <tr className="no-data text-center">{content}</tr>;
 };
 
-export const Header = ({ headerRow }) => <thead>{headerRow}</thead>;
-
-export const HeaderRow = ({ columnHeaders }) => <tr>{columnHeaders}</tr>;
-
-export const HeaderCell = ({ title }) => <th>{title}</th>;
-
-export const Body = ({ tableRows }) => <tbody>{tableRows}</tbody>;
-
-export const BodyRow = ({ cells }) => <tr>{cells}</tr>;
-
-export const BodyCell = ({ value }) => (
-  <td>
-    <I18n>{value}</I18n>
-  </td>
-);
-
+// Default Table Layout
 export const TableLayout = ({ header, body, footer }) => (
   <div className="table-container">
-    <table className="table">
+    <table className="table" cellSpacing="0" cellPadding="0">
       {header}
       {body}
       {footer}
@@ -92,6 +83,7 @@ export const TableLayout = ({ header, body, footer }) => (
   </div>
 );
 
+// Pagination Control
 export const PaginationControl = ({
   nextPage,
   prevPage,
@@ -101,35 +93,29 @@ export const PaginationControl = ({
   count,
 }) => (
   <div className="table--footer d-flex justify-content-between align-items-center">
-    <p className="ml-2 mb-0 align-items-center">
+    <p className="pagination-label">
       {`Displaying ${startIndex} - ${endIndex}`}
     </p>
     {(nextPage || prevPage) && (
-      <nav className="d-flex mr-3 align-items-center">
-        {/* <button
-    disabled={currentPage === 1}
-    onClick={handleJumpFirstPage}
-    className="btn__no-style"
-  >
-    <i className="fa fa-step-backward d-block" aria-hidden="true" />
-  </button> */}
+      <nav className="pagination-buttons">
         <button
           disabled={!prevPage || loading}
           onClick={prevPage}
-          className="px-2 btn__no-style"
+          className="pagination-button"
         >
           <i
             className="fa fa-play fa-flip-horizontal d-block"
             aria-hidden="true"
           />
+          Previous
         </button>
-
         <button
           disabled={!nextPage || loading}
           onClick={nextPage}
-          className="px-2 btn__no-style"
+          className="pagination-button"
         >
           <i className="fa fa-play d-block" aria-hidden="true" />
+          Next
         </button>
       </nav>
     )}

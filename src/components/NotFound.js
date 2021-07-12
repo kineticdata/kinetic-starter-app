@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const NotFound = props => <div>Page Not Found</div>;
+export const NotFound = props => <h1>Page Not Found</h1>;

@@ -1,6 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { history } from '../index';
-import { appLogout } from '../App';
 
 export const Login = ({
   error,

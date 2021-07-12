@@ -17,15 +17,11 @@ import { KappList } from './components/KappList';
 import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
+import * as TableComponents from './components/TableComponents';
 
 export const appLogout = () => logout(() => history.push('/'));
 
-export const TableLayout = ({ body }) => <table>{body}</table>;
-
-export const Body = ({ tableRows }) => <tbody>{tableRows}</tbody>;
-
-export const BodyRow = ({ cells }) => <tr>{cells}</tr>;
-
+// use Wally for empty app
 export const EmptyBodyRow = () => <WallySpinner />;
 
 export const App = () => {
@@ -53,23 +49,22 @@ export const App = () => {
   }, []);
 
   return (
-    <KineticLib
-      components={{ TableLayout, Body, BodyRow, EmptyBodyRow }}
-      locale="en"
-    >
+    <KineticLib components={{ ...TableComponents, EmptyBodyRow }} locale="en">
       {({ initialized, loggedIn, loginProps, timedOut }) => (
         <>
           <Header space={space} loggedIn={loggedIn} profile={profile} />
           {!initialized ? (
             <WallySpinner />
           ) : loggedIn ? (
-            <>
+            <div className="app-container">
               <nav>
                 <ul className="breadcrumbs">
                   {breadcrumbs &&
                     breadcrumbs.map((breadcrumb, idx) => (
                       <li key={breadcrumb.path}>
-                        <Link to={breadcrumb.path}>{breadcrumb.name}</Link>
+                        <Link to={breadcrumb.path} className="breadcrumb-item">
+                          {breadcrumb.name}
+                        </Link>
                         {breadcrumbs.length > 1 && breadcrumbs.length - 1 > idx
                           ? '>'
                           : ''}
@@ -124,7 +119,7 @@ export const App = () => {
                   <Route component={NotFound} />
                 </Switch>
               </main>
-            </>
+            </div>
           ) : (
             <Login {...loginProps} />
           )}
