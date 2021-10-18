@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CoreForm, fetchForm } from '@kineticdata/react';
 import {
-  // useHistory,
+  useHistory,
   // useLocation,
   useParams,
 } from 'react-router-dom';
@@ -11,7 +11,7 @@ import {
 // }
 
 export const Form = props => {
-  // const history = useHistory();
+  const history = useHistory();
   // const query = useQuery();
   const { kappSlug, formSlug, id } = useParams();
 
@@ -48,7 +48,7 @@ export const Form = props => {
   }, [form, props.setCrumbs]);
 
   const handleCreated = useCallback(
-    ({ submission, history }) => {
+    ({ submission }) => {
       const { coreState, currentPage, displayedPage, id } = submission;
       if (
         coreState === 'Draft' ||
