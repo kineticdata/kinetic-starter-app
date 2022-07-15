@@ -1,0 +1,29 @@
+.tjb-header {
+    max-height: 150px;
+    background-color: lightblue;
+}
+
+.tjb-header-logo {
+    height: 100px;
+}
+
+.tjb-header-text {
+    margin-left: 3rem;
+}
+
+.form-group {
+    display: flex;
+}
+
+.form-group input {
+    padding: .5rem;
+}
+
+.field-label {
+    display: flex;
+    align-items: center;
+}
+
+.embedded-core-form {
+    margin: 1rem;
+}

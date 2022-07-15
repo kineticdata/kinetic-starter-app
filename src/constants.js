@@ -1,0 +1,1 @@
+export const SMS_SIGN_UP_FORM = 'sms-sign-up-request';
