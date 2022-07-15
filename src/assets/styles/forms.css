@@ -19,11 +19,31 @@
     padding: .5rem;
 }
 
+.radio {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio label {
+    margin: .25rem;
+}
+
+.sr-only {
+    padding-left: .25rem;
+}
+
 .field-label {
     display: flex;
     align-items: center;
+    margin: 0 0 .25rem 0 !important;
 }
 
 .embedded-core-form {
     margin: 1rem;
 }
+
+button, .submit-text {
+    margin: .5rem;
+    padding: .5rem;
+}
+
