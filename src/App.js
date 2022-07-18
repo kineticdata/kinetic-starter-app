@@ -12,7 +12,6 @@ import './assets/styles/forms.css';
 export const EmptyBodyRow = () => <WallySpinner />;
 
 export const App = () => {
-  
   const [display, setDisplay] = useState(0);
 
   return (
@@ -20,28 +19,32 @@ export const App = () => {
       {({ initialized }) => (
         <>
           <Header />
-          {!initialized ? (
-            <WallySpinner />
-          ) : display === 0 ? (
-            <CoreForm 
-              kapp={"services"}
-              form={SMS_SIGN_UP_FORM}
-              completed={() => setDisplay(1)}
-              public={true}
-            />
-          ) : display === 1 ? (
-            <>
-              <div className="submit-text">Thank you for registering your number.</div>
-              <div className="submit-text">You should be receiving a SMS shortly.</div>
-              <button onClick={() => setDisplay(0)}>
-                Register Another Number
-              </button>
-            </>
-          ) : (
-            <>
-              Something went wrong!
-            </>
-          )}
+          <div className="wrapper">
+            {!initialized ? (
+              <WallySpinner />
+            ) : display === 0 ? (
+              <CoreForm
+                kapp={'services'}
+                form={SMS_SIGN_UP_FORM}
+                completed={() => setDisplay(1)}
+                public={true}
+              />
+            ) : display === 1 ? (
+              <>
+                <div className="submit-text">
+                  Thank you for registering your number.
+                </div>
+                <div className="submit-text">
+                  You should be receiving a SMS shortly.
+                </div>
+                <button onClick={() => setDisplay(0)}>
+                  Register Another Number
+                </button>
+              </>
+            ) : (
+              <>Something went wrong!</>
+            )}
+          </div>
         </>
       )}
     </KineticLib>
