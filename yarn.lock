@@ -1881,10 +1881,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@kineticdata/react@^5.0.7":
-  version "5.0.17"
-  resolved "https://registry.yarnpkg.com/@kineticdata/react/-/react-5.0.17.tgz#44da0f88091cac26097dc94030e75a084245e91d"
-  integrity sha512-PfjKSoum/j4DA9yG9xLGd2984+8mprHzebjp+fOSekcYrgr7oGYWk6DZtXjPnZYPJL78QOjZsf6yjgF8J8IUEA==
+"@kineticdata/react@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@kineticdata/react/-/react-5.1.2.tgz#c1e702452c0c76bf26b8ad222fd62684b7715b7a"
+  integrity sha512-nMoLED9OJ5ie9Tanb67Qbjw1EOSyLEmlfWp2rM5PmNMVU0X0EqTNwtJJz/j6lppIMGG3n7UvM+T1yZBED4APtg==
   dependencies:
     axios "^0.21.1"
     classnames "^2.2.6"
@@ -1899,7 +1899,7 @@
     lodash.isplainobject "^4.0.6"
     lodash.isstring "^4.0.1"
     modularscale-sass "^3.0.8"
-    moment "^2.21.0"
+    moment "^2.29.4"
     prismjs "1.23.0"
     prop-types "^15.7.2"
     react-autosuggest "^9.4.3"
@@ -8004,10 +8004,10 @@ modularscale-sass@^3.0.8:
   resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.10.tgz#3a596b090360129dd2375bee81b9318085cb47b3"
   integrity sha512-ppbMfcXC+ESpqk1s8BfqsuY85DTAJdoPLxrYFohAUjg3r9eh2CBm2Wn7+JAh26DbRpAHynRt3a8ma2FOfk7JGA==
 
-moment@^2.21.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
