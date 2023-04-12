@@ -48,7 +48,6 @@ export const Header = ({ space, loggedIn, profile }) => (
     {loggedIn && (
       <div className="buttons">
         <HeaderDropdownMenu profile={profile} />
-        {/* <button onClick={logout}>Logout</button> */}
       </div>
     )}
   </header>
