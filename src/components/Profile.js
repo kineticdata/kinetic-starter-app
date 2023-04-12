@@ -18,20 +18,14 @@ const ChangePasswordField = props =>
     </div>
   );
 
-export const Profile = ({ profile, ...props }) => {
+export const Profile = ({ profile, setCrumbs }) => {
   const history = useHistory();
 
   // clear navigation breadcrumbs on load
-  useEffect(() => props.setCrumbs([]), [props.setCrumbs]);
+  useEffect(() => setCrumbs([]), [setCrumbs]);
 
   // Form Saves
-  const handleCompleted = useCallback(() => {
-    history.push(`/`);
-  });
-
-  const handleUpdated = useCallback(() => {
-    history.push(`/`);
-  });
+  const handleSave = useCallback(() => () => history.push('/'), [history]);
 
   return (
     <div className="profile-page">
@@ -52,16 +46,8 @@ export const Profile = ({ profile, ...props }) => {
             changePassword: {
               component: ChangePasswordField,
             },
-            // Typeahead not implemented
-            // preferredLocale: {
-            //   component: SelectTypeaheadField,
-            // },
-            // timezone: {
-            //   component: SelectTypeaheadField,
-            // },
           }}
-          onCompleted={handleCompleted}
-          onUpdated={handleUpdated}
+          onSave={handleSave}
         />
       </div>
     </div>

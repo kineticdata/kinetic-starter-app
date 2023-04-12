@@ -11,12 +11,15 @@ export const Login = ({
   redirect,
   username,
 }) => {
-  const redirectCallback = redirect ? () => history.push('/') : null;
+  const onSubmit = useCallback(
+    event => {
+      const redirectCallback = redirect ? () => history.push('/') : null;
 
-  const onSubmit = useCallback(event => onLogin(event, redirectCallback), [
-    onLogin,
-    redirectCallback,
-  ]);
+      return onLogin(event, redirectCallback);
+    },
+    [onLogin, redirect],
+  );
+
   return (
     <div className="login__wrapper">
       <span>

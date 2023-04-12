@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormTable, fetchKapp } from '@kineticdata/react';
+import { FormTable } from '@kineticdata/react';
 import { useParams } from 'react-router';
 import * as TableComponents from './TableComponents';
+import { useCrumbs, useKapp } from '../hooks';
 
 // structure for each cell in the name column
 export const NameCell = ({ tableOptions: { kappSlug }, row }) => (
@@ -33,32 +34,14 @@ const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
 // overriding the default header cell for this table, passed into "components"
 export const HeaderCell = ({ title }) => <th className="th-dark">{title}</th>;
 
-export const FormList = props => {
+export const FormList = ({ setCrumbs }) => {
   const { kappSlug } = useParams();
 
-  // set navigation breadcrumbs
-  useEffect(
-    () =>
-      props.setCrumbs([
-        {
-          path: '/kapps',
-          name: 'Kapps',
-        },
-      ]),
-    [props.setCrumbs],
-  );
-
   // fetch and set kapp
-  const [kapp, setKapp] = useState();
-  useEffect(() => {
-    async function fetchKappRequest() {
-      let response = await fetchKapp({
-        kappSlug,
-      });
-      setKapp(response.kapp);
-    }
-    fetchKappRequest();
-  }, []);
+  const kapp = useKapp(kappSlug);
+
+  // set navigation breadcrumbs
+  useCrumbs({ setCrumbs, kappSlug });
 
   return (
     <FormTable

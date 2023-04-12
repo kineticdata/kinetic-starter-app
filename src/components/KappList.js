@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { KappTable } from '@kineticdata/react';
 import * as TableComponents from './TableComponents';
 import moment from 'moment';
+import { useCrumbs } from '../hooks';
 
 // structure of each cell in the name column
 export const NameCell = ({ row }) => (
@@ -35,17 +36,15 @@ const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
   noItemsMessage: 'There are no Kapps to display.',
 });
 
-export const KappList = props => {
+export const KappList = ({ authorized, setCrumbs }) => {
   // clear breadcrumbs on load
-  useEffect(() => props.setCrumbs([]), [props.setCrumbs]);
+  useCrumbs({ setCrumbs });
 
   return (
     <KappTable
       components={{ ...TableComponents, EmptyBodyRow }}
       columnSet={
-        props.authorized
-          ? ['name', 'updatedAt', 'actions']
-          : ['name', 'updatedAt']
+        authorized ? ['name', 'updatedAt', 'actions'] : ['name', 'updatedAt']
       }
       addColumns={[
         {

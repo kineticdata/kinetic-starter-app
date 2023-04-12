@@ -1,51 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { CoreForm, fetchForm } from '@kineticdata/react';
-import {
-  useHistory,
-  // useLocation,
-  useParams,
-} from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { CoreForm } from '@kineticdata/react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useCrumbs, useForm } from '../hooks';
 
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
-
-export const Form = props => {
+export const Form = ({ setCrumbs }) => {
   const history = useHistory();
-  // const query = useQuery();
   const { kappSlug, formSlug, id } = useParams();
 
-  // fetch and set form
-  const [form, setForm] = useState();
-  useEffect(() => {
-    async function fetchFormRequest() {
-      let response = await fetchForm({
-        kappSlug,
-        formSlug,
-        include: 'kapp',
-      });
-      setForm(response.form);
-    }
-    fetchFormRequest();
-  }, []);
+  // Fetch the form.
+  const form = useForm(kappSlug, formSlug);
 
   // set navigation breadcrumbs using fetched form info
-  useEffect(() => {
-    props.setCrumbs([
-      {
-        path: '/kapps',
-        name: 'Kapps',
-      },
-      {
-        path: `/kapps/${kappSlug}/forms`,
-        name: `${form ? form.kapp.name : 'Forms'}`,
-      },
-      {
-        path: `/kapps/${kappSlug}/forms/${formSlug}/submissions`,
-        name: `${form ? form.name : 'Form'}`,
-      },
-    ]);
-  }, [form, props.setCrumbs]);
+  useCrumbs({ setCrumbs, form, kappSlug, formSlug, id });
 
   const handleCreated = useCallback(
     ({ submission }) => {
@@ -61,18 +27,11 @@ export const Form = props => {
         history.push(`/kapps/${kappSlug}/forms/${formSlug}/submissions`);
       }
     },
-    [kappSlug, formSlug],
+    [kappSlug, formSlug, history],
   );
 
   // Form Saves
-  const handleCompleted = useCallback(
-    ({ history }) => {
-      history.push(`/kapps/${kappSlug}/forms/${formSlug}/submissions`);
-    },
-    [kappSlug, formSlug],
-  );
-
-  const handleUpdate = useCallback(
+  const handleSave = useCallback(
     ({ history }) => {
       history.push(`/kapps/${kappSlug}/forms/${formSlug}/submissions`);
     },
@@ -85,10 +44,9 @@ export const Form = props => {
       {id ? (
         <CoreForm
           submission={id}
-          onCompleted={handleCompleted}
-          onUpdated={handleUpdate}
+          onCompleted={handleSave}
+          onUpdated={handleSave}
           review={true}
-          // review={query.get('mode') === 'review'} <--- not implemented
         />
       ) : (
         <CoreForm kapp={kappSlug} form={formSlug} onCreated={handleCreated} />
