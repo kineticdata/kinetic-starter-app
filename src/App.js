@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import {
-  KineticLib,
-  logout,
-  fetchSpace,
-  fetchProfile,
-} from '@kineticdata/react';
+import { KineticLib, logout } from '@kineticdata/react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from './index';
 import { WallySpinner } from './components/Loading';
@@ -18,6 +13,7 @@ import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
 import * as TableComponents from './components/TableComponents';
+import { useProfile, useSpace } from './hooks';
 
 export const appLogout = () => logout(() => history.push('/'));
 
@@ -29,24 +25,10 @@ export const App = () => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   // fetch and set space
-  const [space, setSpace] = useState();
-  useEffect(() => {
-    async function fetchSpaceRequest() {
-      let response = await fetchSpace();
-      setSpace(response.space);
-    }
-    fetchSpaceRequest();
-  }, []);
+  const space = useSpace();
 
   // fetch and set profile
-  const [profile, setProfile] = useState();
-  useEffect(() => {
-    async function fetchProfileRequest() {
-      let response = await fetchProfile({ include: 'authorization' });
-      setProfile(response.profile);
-    }
-    fetchProfileRequest();
-  }, []);
+  const profile = useProfile();
 
   return (
     <KineticLib components={{ ...TableComponents, EmptyBodyRow }} locale="en">

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   SubmissionTable,
   deleteSubmission,
-  fetchForm,
   mountTable,
   unmountTable,
+  refetchTable,
 } from '@kineticdata/react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as TableComponents from './TableComponents';
+import { useCrumbs, useForm } from '../hooks';
 
 // define the fields used for filtering
 const FilterFormLayout = TableComponents.generateFilterFormLayout([
@@ -28,7 +29,7 @@ const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
 const submissionsTableKey = (kappSlug, formSlug) =>
   `${kappSlug}-${formSlug}-tablekey`;
 
-export const SubmissionList = props => {
+export const SubmissionList = ({ setCrumbs }) => {
   const { kappSlug, formSlug } = useParams();
 
   // build table key and mount table since we are using the filter form
@@ -38,35 +39,15 @@ export const SubmissionList = props => {
     return () => {
       unmountTable(tableKey);
     };
-  }, []);
+  });
 
-  // fetch and set form
-  const [form, setForm] = useState();
-  useEffect(() => {
-    async function fetchFormRequest() {
-      let response = await fetchForm({
-        kappSlug,
-        formSlug,
-        include: 'kapp',
-      });
-      setForm(response.form);
-    }
-    fetchFormRequest();
-  }, []);
+  // Fetch the form.
+  const form = useForm(kappSlug, formSlug);
+  useCrumbs({ setCrumbs, form, kappSlug, formSlug });
 
-  // set navigation breadcrumbs using fetched form info
-  useEffect(() => {
-    props.setCrumbs([
-      {
-        path: '/kapps',
-        name: 'Kapps',
-      },
-      {
-        path: `/kapps/${kappSlug}/forms`,
-        name: `${form ? form.kapp.name : 'Forms'}`,
-      },
-    ]);
-  }, [form, props.setCrumbs]);
+  const handleDelete = row => () => {
+    deleteSubmission({ id: row.get('id') }).then(() => refetchTable(tableKey));
+  };
 
   // structure for each cell in the handle column
   const HandleCell = ({ row }) => (
@@ -88,20 +69,13 @@ export const SubmissionList = props => {
       >
         <button>Review</button>
       </Link>
-      <button
-        onClick={() => {
-          deleteSubmission({ id: row.get('id') });
-          unmountTable(tableKey);
-          mountTable(tableKey);
-        }}
-      >
-        Delete
-      </button>
+      <button onClick={handleDelete(row)}>Delete</button>
     </td>
   );
 
   return (
     <SubmissionTable
+      mode="form"
       tableKey={tableKey} // set so we can mount the table / render the filter form
       kappSlug={kappSlug}
       formSlug={formSlug}
