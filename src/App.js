@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { KineticLib, logout } from '@kineticdata/react';
+import { KineticLib } from '@kineticdata/react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
-import { history } from './index';
 import { WallySpinner } from './components/Loading';
 import { Login } from './components/Login';
 import { Header } from './components/Header';
@@ -14,8 +13,6 @@ import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
 import * as TableComponents from './components/TableComponents';
 import { useProfile, useSpace } from './hooks';
-
-export const appLogout = () => logout(() => history.push('/'));
 
 // use Wally for empty app
 export const EmptyBodyRow = () => <WallySpinner />;
