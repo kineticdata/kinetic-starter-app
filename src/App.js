@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { KineticLib } from '@kineticdata/react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import { WallySpinner } from './components/Loading';
 import { Login } from './components/Login';
@@ -11,13 +10,12 @@ import { KappList } from './components/KappList';
 import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
-import * as TableComponents from './components/TableComponents';
 import { useProfile, useSpace } from './hooks';
 
 // use Wally for empty app
 export const EmptyBodyRow = () => <WallySpinner />;
 
-export const App = () => {
+export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
   // breadcrumbs for navigation
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
@@ -25,90 +23,91 @@ export const App = () => {
   const space = useSpace();
 
   // fetch and set profile
-  const profile = useProfile();
+  const profile = useProfile(loggedIn);
 
   return (
-    <KineticLib components={{ ...TableComponents, EmptyBodyRow }} locale="en">
-      {({ initialized, loggedIn, loginProps, timedOut }) => (
-        <>
-          <Header space={space} loggedIn={loggedIn} profile={profile} />
-          {!initialized ? (
-            <WallySpinner />
-          ) : loggedIn ? (
-            <div className="app-container">
-              <nav>
-                <ul className="breadcrumbs">
-                  {breadcrumbs &&
-                    breadcrumbs.map((breadcrumb, idx) => (
-                      <li key={breadcrumb.path}>
-                        <Link to={breadcrumb.path} className="breadcrumb-item">
-                          {breadcrumb.name}
-                        </Link>
-                        {breadcrumbs.length > 1 && breadcrumbs.length - 1 > idx
-                          ? '>'
-                          : ''}
-                      </li>
-                    ))}
-                </ul>
-              </nav>
-              <main>
-                <Switch>
-                  <Route
-                    path="/profile"
-                    render={() => (
-                      <Profile setCrumbs={setBreadcrumbs} profile={profile} />
-                    )}
-                    exact
+    <>
+      <Header space={space} loggedIn={loggedIn} profile={profile} />
+      {!initialized ? (
+        <WallySpinner />
+      ) : loggedIn ? (
+        <div className="app-container">
+          <nav>
+            <ul className="breadcrumbs">
+              {breadcrumbs &&
+                breadcrumbs.map((breadcrumb, idx) => (
+                  <li key={breadcrumb.path}>
+                    <Link to={breadcrumb.path} className="breadcrumb-item">
+                      {breadcrumb.name}
+                    </Link>
+                    {breadcrumbs.length > 1 && breadcrumbs.length - 1 > idx
+                      ? '>'
+                      : ''}
+                  </li>
+                ))}
+            </ul>
+          </nav>
+          <main>
+            <Switch>
+              <Route
+                path="/profile"
+                render={() => (
+                  <Profile setCrumbs={setBreadcrumbs} profile={profile} />
+                )}
+                exact
+              />
+              <Route
+                path={['/', '/kapps']}
+                render={() => (
+                  <KappList
+                    setCrumbs={setBreadcrumbs}
+                    authorized={
+                      profile && profile.authorization['Modification']
+                    }
                   />
-                  <Route
-                    path={['/', '/kapps']}
-                    render={() => (
-                      <KappList
-                        setCrumbs={setBreadcrumbs}
-                        authorized={
-                          profile && profile.authorization['Modification']
-                        }
-                      />
-                    )}
-                    exact
-                  />
-                  <Route path="/kapps/:kappSlug" exact>
-                    <Redirect to="forms" />
-                  </Route>
-                  <Route
-                    path="/kapps/:kappSlug/forms"
-                    render={() => <FormList setCrumbs={setBreadcrumbs} />}
-                    exact
-                  />
-                  <Route
-                    path="/kapps/:kappSlug/forms/:formSlug"
-                    render={() => <Form setCrumbs={setBreadcrumbs} />}
-                    exact
-                  />
-                  <Route
-                    path="/kapps/:kappSlug/forms/:formSlug/submissions"
-                    render={() => <SubmissionList setCrumbs={setBreadcrumbs} />}
-                    exact
-                  />
-                  <Route
-                    path="/kapps/:kappSlug/forms/:formSlug/submissions/:id"
-                    render={() => <Form setCrumbs={setBreadcrumbs} />}
-                    exact
-                  />
-                  <Route component={NotFound} />
-                </Switch>
-              </main>
-            </div>
-          ) : (
-            <Login {...loginProps} />
-          )}
-          {timedOut && (
-            <dialog open>
-              <Login {...loginProps} />
-            </dialog>
-          )}
-        </>
+                )}
+                exact
+              />
+              <Route path="/kapps/:kappSlug" exact>
+                <Redirect to="forms" />
+              </Route>
+              <Route
+                path="/kapps/:kappSlug/forms"
+                render={() => <FormList setCrumbs={setBreadcrumbs} />}
+                exact
+              />
+              <Route
+                path="/kapps/:kappSlug/forms/:formSlug"
+                render={() => <Form setCrumbs={setBreadcrumbs} />}
+                exact
+              />
+              <Route
+                path="/kapps/:kappSlug/forms/:formSlug/submissions"
+                render={() => <SubmissionList setCrumbs={setBreadcrumbs} />}
+                exact
+              />
+              <Route
+                path="/kapps/:kappSlug/forms/:formSlug/submissions/:id"
+                render={() => <Form setCrumbs={setBreadcrumbs} />}
+                exact
+              />
+              <Route
+                path="/kapps/:kappSlug/forms/:formSlug/submissions/:id/edit"
+                render={() => <Form setCrumbs={setBreadcrumbs} edit />}
+                exact
+              />
+              <Route component={NotFound} />
+            </Switch>
+          </main>
+        </div>
+      ) : (
+        <Login {...loginProps} />
       )}
-    </KineticLib>
+      {timedOut && (
+        <dialog open>
+          <Login {...loginProps} />
+        </dialog>
+      )}
+    </>
   );
 };

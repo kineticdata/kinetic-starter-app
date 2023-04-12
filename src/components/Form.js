@@ -3,7 +3,7 @@ import { CoreForm } from '@kineticdata/react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useCrumbs, useForm } from '../hooks';
 
-export const Form = ({ setCrumbs }) => {
+export const Form = ({ setCrumbs, edit }) => {
   const history = useHistory();
   const { kappSlug, formSlug, id } = useParams();
 
@@ -46,7 +46,7 @@ export const Form = ({ setCrumbs }) => {
           submission={id}
           onCompleted={handleSave}
           onUpdated={handleSave}
-          review={true}
+          review={!edit}
         />
       ) : (
         <CoreForm kapp={kappSlug} form={formSlug} onCreated={handleCreated} />

@@ -50,28 +50,40 @@ export const SubmissionList = ({ setCrumbs }) => {
   };
 
   // structure for each cell in the handle column
-  const HandleCell = ({ row }) => (
-    <td>
-      <Link
-        to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get('id')}`}
-      >
-        {row.get('handle')}
-      </Link>
-    </td>
-  );
+  const HandleCell = ({ row }) => {
+    const isDraft = row.get('coreState') === 'Draft';
+
+    return (
+      <td>
+        <Link
+          to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get(
+            'id',
+          )}${isDraft ? '/edit' : ''}`}
+        >
+          {row.get('handle')}
+        </Link>
+      </td>
+    );
+  };
 
   // structure for each cell in the actions column
   // placed after tableKey is defined so we can remount table
-  const ActionsCell = ({ row }) => (
-    <td className="actions-cell">
-      <Link
-        to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get('id')}`}
-      >
-        <button>Review</button>
-      </Link>
-      <button onClick={handleDelete(row)}>Delete</button>
-    </td>
-  );
+  const ActionsCell = ({ row }) => {
+    const isDraft = row.get('coreState') === 'Draft';
+
+    return (
+      <td className="actions-cell">
+        <Link
+          to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get(
+            'id',
+          )}${isDraft ? '/edit' : ''}`}
+        >
+          <button>{isDraft ? 'Edit' : 'Review'}</button>
+        </Link>
+        <button onClick={handleDelete(row)}>Delete</button>
+      </td>
+    );
+  };
 
   return (
     <SubmissionTable
