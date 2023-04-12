@@ -48,7 +48,7 @@ export const useSpace = () => {
   return space;
 };
 
-export const useProfile = () => {
+export const useProfile = loggedIn => {
   const [profile, setProfile] = useState();
   useEffect(() => {
     const fetchProfileRequest = async () => {
@@ -56,7 +56,7 @@ export const useProfile = () => {
       setProfile(response.profile);
     };
     fetchProfileRequest().catch(console.error);
-  }, []);
+  }, [loggedIn]);
 
   return profile;
 };
