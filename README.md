@@ -2,6 +2,9 @@
 
 This project is meant to be a no frills starting point for kinetic app bundle development. The bundle exposing public pages is also a non-trivial use case that our bundle uses out of the box and introduces client-side routing into the mix. 
 
+## Kinetic Component Library
+Kinetic data has developed the [React Kinetic Library (RKL) component library](https://components.kineticdata.com/) for use with the Kinetic Platform.  RKL provides API and UI elements that enhances the developer experience through the use of shared components.
+
 ## KineticLib Component
 
 #### Render Props
