@@ -1,84 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { KappTable } from '@kineticdata/react';
-import * as TableComponents from './TableComponents';
 import moment from 'moment';
-import { useCrumbs } from '../hooks';
-
-// structure of each cell in the name column
-export const NameCell = ({ row }) => (
-  <td>
-    <Link to={`/kapps/${row.get('slug')}/forms`}>{row.get('name')}</Link>
-    <br />
-    <small>{row.get('slug')}</small>
-  </td>
-);
-
-// structure of each cell in the updatedAt column
-export const DateCell = ({ row }) => (
-  <td>{moment(row.get('updatedAt')).format('LLL')}</td>
-);
-
-// structure of each cell in the actions column
-export const ActionsCell = ({ row }) => (
-  <td className="actions-cell">
-    <Link to={`/app/console/#/kapps/${row.get('slug')}/settings/details`}>
-      <button className="btn btn-xs btn-danger">
-        <span className="fa fa-pencil fa-fw" /> Edit
-      </button>
-    </Link>
-  </td>
-);
-
-// overriding the default table empty body row
-const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
-  loadingMessage: 'Loading Kapps...',
-  noItemsMessage: 'There are no Kapps to display.',
-});
+import { useCrumbs, useKappsList } from '../hooks';
 
 export const KappList = ({ authorized, setCrumbs }) => {
+  // fetch the list of kapps
+  const [kapps, paging] = useKappsList();
+
   // clear breadcrumbs on load
   useCrumbs({ setCrumbs });
 
   return (
-    <KappTable
-      components={{ ...TableComponents, EmptyBodyRow }}
-      columnSet={
-        authorized ? ['name', 'updatedAt', 'actions'] : ['name', 'updatedAt']
-      }
-      addColumns={[
-        {
-          value: 'actions',
-          title: ' ',
-          sortable: false,
-          components: {
-            BodyCell: ActionsCell,
-          },
-        },
-      ]}
-      alterColumns={{
-        name: {
-          components: {
-            BodyCell: NameCell,
-          },
-        },
-        updatedAt: {
-          components: {
-            BodyCell: DateCell,
-          },
-        },
-      }}
-      sortable={false}
-    >
-      {({ pagination, table }) => (
-        <>
-          <h1>Kapps</h1>
-          <div>
-            {table}
-            {pagination}
-          </div>
-        </>
+    <>
+      <h1>Kapps</h1>
+      <table className="table" cellPadding={0} cellSpacing={0}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            {authorized && <th>Updated</th>}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {!kapps && (
+            <tr>
+              <td colSpan={authorized ? 3 : 2}>
+                {paging.loading ? 'Loading...' : 'Error!'}
+              </td>
+            </tr>
+          )}
+          {kapps &&
+            kapps.map(kapp => (
+              <tr key={kapp.slug}>
+                <td>
+                  <Link to={`/kapps/${kapp.slug}/forms`}>{kapp.name}</Link>
+                  <br />
+                  <small>{kapp.slug}</small>
+                </td>
+                {authorized && <td>{moment(kapp.updatedAt).format('LLL')}</td>}
+                <td className="actions-cell">
+                  <a
+                    href={`/app/console/#/kapps/${kapp.slug}/settings/details`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <button className="btn">Edit</button>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          {kapps && kapps.length === 0 && (
+            <tr>
+              <td colSpan={authorized ? 3 : 2}>
+                There are no Kapps to display
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      {kapps && (
+        <div className="pagination-buttons">
+          <button
+            className="pagination-button"
+            disabled={paging.loading || !paging.previousPage}
+            onClick={paging.previousPage}
+          >
+            Previous Page
+          </button>
+          <span className="pagination-text">
+            {!paging.loading
+              ? `${paging.startIndex} - ${paging.endIndex}`
+              : '...'}
+          </span>
+          <button
+            className="pagination-button"
+            disabled={paging.loading || !paging.nextPage}
+            onClick={paging.nextPage}
+          >
+            Next Page
+          </button>
+        </div>
       )}
-    </KappTable>
+    </>
   );
 };

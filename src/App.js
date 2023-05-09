@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Link, Route, Switch, Redirect } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { WallySpinner } from './components/Loading';
 import { Login } from './components/Login';
 import { Header } from './components/Header';
@@ -11,9 +11,6 @@ import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
 import { useProfile, useSpace } from './hooks';
-
-// use Wally for empty app
-export const EmptyBodyRow = () => <WallySpinner />;
 
 export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
   // breadcrumbs for navigation
@@ -68,11 +65,8 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                 )}
                 exact
               />
-              <Route path="/kapps/:kappSlug" exact>
-                <Redirect to="forms" />
-              </Route>
               <Route
-                path="/kapps/:kappSlug/forms"
+                path={['/kapps/:kappSlug', '/kapps/:kappSlug/forms']}
                 render={() => <FormList setCrumbs={setBreadcrumbs} />}
                 exact
               />

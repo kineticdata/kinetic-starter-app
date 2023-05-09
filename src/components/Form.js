@@ -11,7 +11,7 @@ export const Form = ({ setCrumbs, edit }) => {
   const form = useForm(kappSlug, formSlug);
 
   // set navigation breadcrumbs using fetched form info
-  useCrumbs({ setCrumbs, form, kappSlug, formSlug, id });
+  useCrumbs({ setCrumbs, form, kappSlug, formSlug, id, isNew: !id });
 
   const handleCreated = useCallback(
     ({ submission }) => {

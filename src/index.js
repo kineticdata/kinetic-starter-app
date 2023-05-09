@@ -1,11 +1,11 @@
+import '@toast-ui/editor/dist/toastui-editor.css';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createHashHistory } from 'history';
-import { App, EmptyBodyRow } from './App';
-import * as TableComponents from './components/TableComponents';
+import { App } from './App';
 import { KineticLib } from '@kineticdata/react';
 
 // Asynchronously import the global dependencies that are used in the embedded
@@ -18,8 +18,8 @@ export const history = createHashHistory();
 
 ReactDOM.render(
   <Router history={history}>
-    <KineticLib components={{ ...TableComponents, EmptyBodyRow }} locale="en">
-      {kineticProps => <App globals={globals} {...kineticProps} />}
+    <KineticLib globals={globals} locale="en">
+      {kineticProps => <App {...kineticProps} />}
     </KineticLib>
   </Router>,
   document.getElementById('root'),

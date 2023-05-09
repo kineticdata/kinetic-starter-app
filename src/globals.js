@@ -7,7 +7,6 @@
 // Note that the example below shows jquery but jquery is not currently
 // configured as a dependency so for this code to work jquery needs to be added
 // as a dependency and installed.
-
 import jquery from 'jquery';
 import moment from 'moment';
 
@@ -20,6 +19,9 @@ jquery.ajaxSetup({
 window.$ = jquery;
 window.jQuery = jquery;
 window.moment = moment;
+
+// Import widgets so they're loaded before
+require('./widgets');
 
 /**
  * Kinetic form customizations
@@ -109,3 +111,5 @@ window.bundle.config.ready = function(form) {
       });
   }
 };
+
+window.bundle.foo = 'bar';

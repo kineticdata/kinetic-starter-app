@@ -83,19 +83,29 @@ main h1 {
 }
 
 /* Fields */
-input[type='text'],
-input[type='password'],
-select {
+.form-group[data-element-type],
+.checkbox[data-element-type],
+.radio[data-element-type],
+.field {
+  margin-bottom: 1rem;
+}
+input[data-element-type][type='text'],
+input[data-element-type][type='password'],
+select[data-element-type],
+textarea[data-element-type],
+.field > input,
+.field > select,
+.field > textarea {
   width: 15rem;
   padding: 1rem 1.25rem;
-  margin: 0.5rem;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
-button {
+button[data-element-type],
+button.btn {
   min-width: 5rem;
   padding: 1rem 1.25rem;
   margin: 0.5rem;
@@ -104,7 +114,8 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button[data-element-type]:hover,
+button.btn:hover {
   background-color: rgb(54, 55, 56);
   color: white;
 }
@@ -147,11 +158,6 @@ th {
   background-color: white;
   text-align: left;
   border-bottom: 1px solid rgb(54, 55, 56);
-}
-
-.th-dark {
-  background-color: rgb(54, 55, 56);
-  color: white;
 }
 
 tr:nth-child(even) {
@@ -246,7 +252,6 @@ td {
   padding: 0.5em;
   margin: 0;
 }
-
-.pagination-button:nth-child(2) {
-  margin-left: 1em;
+.pagination-text {
+  padding: 1rem;
 }
