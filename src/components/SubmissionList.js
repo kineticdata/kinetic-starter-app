@@ -76,7 +76,7 @@ export const SubmissionList = ({ setCrumbs }) => {
             ))}
           {submissions && submissions.length === 0 && (
             <tr>
-              <td colSpan="4">There are no Kapps to display</td>
+              <td colSpan="4">There are no Submissions to display</td>
             </tr>
           )}
         </tbody>

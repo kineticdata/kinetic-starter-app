@@ -36,8 +36,6 @@ export const Profile = ({ profile, setCrumbs }) => {
           fieldSet={[
             'email',
             'displayName',
-            'preferredLocale',
-            'timezone',
             'password',
             'passwordConfirmation',
             'changePassword',
