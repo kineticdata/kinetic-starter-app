@@ -26,21 +26,28 @@ export const Login = ({
         <h1>Login</h1>
         <form>
           {error && <div style={{ color: 'red' }}>{error}</div>}
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={onChangeUsername}
-            value={username}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={onChangePassword}
-            value={password}
-          />
-          <button disabled={pending} type="submit" onClick={onSubmit}>
+          <div className="field">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={onChangeUsername}
+              value={username}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={onChangePassword}
+              value={password}
+            />
+          </div>
+          <button
+            className="btn"
+            disabled={pending}
+            type="submit"
+            onClick={onSubmit}
+          >
             Login
           </button>
         </form>
