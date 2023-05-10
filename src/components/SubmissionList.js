@@ -32,7 +32,7 @@ export const SubmissionList = ({ setCrumbs }) => {
       <table className="table" cellPadding={0} cellSpacing={0}>
         <thead>
           <tr>
-            <th>Handle</th>
+            <th>Label | Handle</th>
             <th>Submitted By</th>
             <th>Core State</th>
             <th></th>
@@ -53,8 +53,10 @@ export const SubmissionList = ({ setCrumbs }) => {
                       submission.id
                     }${submission.coreState === 'Draft' ? '/edit' : ''}`}
                   >
-                    {submission.handle}
+                    {submission.label || submission.id}
                   </Link>
+                  <br />
+                  <small>{submission.handle}</small>
                 </td>
                 <td>{submission.submittedBy}</td>
                 <td>{submission.coreState}</td>
