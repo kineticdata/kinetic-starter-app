@@ -10,6 +10,7 @@ import { KappList } from './components/KappList';
 import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
+import { Users } from './components/Users';
 import { useProfile, useSpace } from './hooks';
 
 export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
@@ -51,6 +52,11 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                 render={() => (
                   <Profile setCrumbs={setBreadcrumbs} profile={profile} />
                 )}
+                exact
+              />
+              <Route
+                path="/users"
+                render={() => <Users setCrumbs={setBreadcrumbs} />}
                 exact
               />
               <Route

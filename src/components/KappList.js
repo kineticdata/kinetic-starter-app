@@ -13,6 +13,8 @@ export const KappList = ({ authorized, setCrumbs }) => {
   return (
     <>
       <h1>Kapps</h1>
+      <Link to="/users">View Users</Link>
+      <br/>
       <table className="table" cellPadding={0} cellSpacing={0}>
         <thead>
           <tr>
