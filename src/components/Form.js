@@ -31,12 +31,9 @@ export const Form = ({ setCrumbs, edit }) => {
   );
 
   // Form Saves
-  const handleSave = useCallback(
-    ({ history }) => {
-      history.push(`/kapps/${kappSlug}/forms/${formSlug}/submissions`);
-    },
-    [kappSlug, formSlug],
-  );
+  const handleSave = useCallback(() => {
+    history.push(`/kapps/${kappSlug}/forms/${formSlug}/submissions`);
+  }, [kappSlug, formSlug]);
 
   return (
     <div>
