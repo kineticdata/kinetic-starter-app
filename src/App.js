@@ -6,7 +6,7 @@ import { Login } from './components/Login';
 import { Header } from './components/Header';
 import { Form } from './components/Form';
 import { FormList } from './components/FormList';
-import { KappList } from './components/KappList';
+import { CalendarList } from './components/CalendarList';
 import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
@@ -57,9 +57,9 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                 exact
               />
               <Route
-                path={['/', '/kapps']}
+                path={['/', '/calendar']}
                 render={() => (
-                  <KappList
+                  <CalendarList
                     setCrumbs={setBreadcrumbs}
                     authorized={
                       profile && profile.authorization['Modification']
@@ -68,32 +68,9 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                 )}
                 exact
               />
-              <Route path="/kapps/:kappSlug" exact>
-                <Redirect to="forms" />
-              </Route>
               <Route
-                path="/kapps/:kappSlug/forms"
-                render={() => <FormList setCrumbs={setBreadcrumbs} />}
-                exact
-              />
-              <Route
-                path="/kapps/:kappSlug/forms/:formSlug"
+                path="/calendar/:formSlug"
                 render={() => <Form setCrumbs={setBreadcrumbs} />}
-                exact
-              />
-              <Route
-                path="/kapps/:kappSlug/forms/:formSlug/submissions"
-                render={() => <SubmissionList setCrumbs={setBreadcrumbs} />}
-                exact
-              />
-              <Route
-                path="/kapps/:kappSlug/forms/:formSlug/submissions/:id"
-                render={() => <Form setCrumbs={setBreadcrumbs} />}
-                exact
-              />
-              <Route
-                path="/kapps/:kappSlug/forms/:formSlug/submissions/:id/edit"
-                render={() => <Form setCrumbs={setBreadcrumbs} edit />}
                 exact
               />
               <Route component={NotFound} />

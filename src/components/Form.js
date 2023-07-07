@@ -2,11 +2,12 @@ import React, { useCallback } from 'react';
 import { CoreForm } from '@kineticdata/react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useCrumbs, useForm } from '../hooks';
+import { CALENDAR_KAPP_SLUG } from '../constants';
 
 export const Form = ({ setCrumbs, edit }) => {
   const history = useHistory();
-  const { kappSlug, formSlug, id } = useParams();
-
+  const { formSlug, id } = useParams();
+  const kappSlug = CALENDAR_KAPP_SLUG;
   // Fetch the form.
   const form = useForm(kappSlug, formSlug);
 

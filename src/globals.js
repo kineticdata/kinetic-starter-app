@@ -10,6 +10,9 @@
 
 import jquery from 'jquery';
 import moment from 'moment';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+//import { Calendar } from './components/calendar/Calendar';
 
 jquery.ajaxSetup({
   xhrFields: {
@@ -109,3 +112,41 @@ window.bundle.config.ready = function(form) {
       });
   }
 };
+
+// // Create helpers namespace for importing the calendar configuration
+// window.bundle.helpers = window.bundle.helpers || {};
+
+// /**
+//  * Displays a calendar.
+//  *
+//  * @param options {
+//  *    div:              DOM Element *required*
+//  *        Element element the calendar is anchored to.
+//  *
+//  *    calendarSlug:     Slug of calendar *required*
+//  *        The slug of the calendar, must match a calendar configuration
+//  *        in the calendar configuration datastore.
+//  *
+//  *    size:      Width of the window the calendar is render in. *recommended*
+//  *        The options are medium and large.
+//  *
+//  *    timezone:         Set the calendar initial timezone
+//  *
+//  *    title:            Add a title to the calendar
+//  */
+// window.bundle.helpers.calendar = (div, options = {}) => {
+//   if (!options.calendarSlug) {
+//     console.warn('The calendar requires calendarSlug');
+//     return;
+//   }
+
+//   ReactDOM.render(
+//     <Calendar
+//       slug={options.calendarSlug}
+//       size={options.size}
+//       timezone={options.timezone}
+//       title={options.title}
+//     />,
+//     div,
+//   );
+// };
