@@ -1,6 +1,6 @@
 import { Record, Map } from 'immutable';
 import moment from 'moment';
-import { store } from '../store';
+import { store } from '../../index';
 import { namespaceBuilder, withPayload, noPayload } from '../../utils';
 import { generateKey } from '@kineticdata/react';
 const ns = namespaceBuilder('common/calendar');

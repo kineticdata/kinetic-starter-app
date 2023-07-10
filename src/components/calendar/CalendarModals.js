@@ -4,8 +4,8 @@ import { CoreForm, I18n, Moment } from '@kineticdata/react';
 import { compose, withHandlers } from 'recompose';
 import moment from 'moment';
 import { getDetail } from './calendarHelpers';
-import { connect } from '../../redux/store';
 import { actions as calendarActions } from '../../redux/modules/calendar';
+import {connect} from "react-redux";
 
 const ErrorMessage = () => (
   <div>

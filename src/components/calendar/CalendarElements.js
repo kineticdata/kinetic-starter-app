@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map } from 'immutable';
+import 'react-dates/initialize';
 import { DayPickerSingleDateController } from 'react-dates';
 import classNames from 'classnames';
 import { generateKey } from '@kineticdata/react';

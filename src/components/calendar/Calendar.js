@@ -1,4 +1,3 @@
-import { connect } from '../../redux/store';
 import { generateKey } from '@kineticdata/react';
 import { compose, lifecycle, withState, withHandlers } from 'recompose';
 import { List, Map, fromJS } from 'immutable';
@@ -13,6 +12,7 @@ import {
   setEventsColor,
 } from './calendarHelpers';
 import { CalendarWrapper } from './CalendarWrapper';
+import {connect} from "react-redux";
 export { refetchCalendarEvents };
 
 export const handleMainDateSelect = props => args => {

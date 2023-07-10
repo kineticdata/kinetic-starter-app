@@ -20,8 +20,8 @@ export const NameCell = ({ tableOptions: { kappSlug }, row }) => (
 // structure for each cell in the actions column
 export const ActionsCell = ({ tableOptions: { kappSlug }, row }) => (
   <td className="actions-cell">
-    <Link to={`/kapps/${kappSlug}/forms/${row.get('slug')}`}>
-      <button>Submit New</button>
+    <Link to={`/calendar/${row.get('slug')}`}>
+      <button>Open Calendar</button>
     </Link>
   </td>
 );
@@ -39,10 +39,10 @@ export const CalendarList = ({ setCrumbs }) => {
   const kappSlug  = CALENDAR_KAPP_SLUG;
 
   // fetch and set kapp
-  const kapp = useKapp(kappSlug);
+  // const kapp = useKapp(kappSlug);
 
   // set navigation breadcrumbs
-  useCrumbs({ setCrumbs, kappSlug });
+  // useCrumbs({ setCrumbs, kappSlug });
 
   return (
     <FormTable

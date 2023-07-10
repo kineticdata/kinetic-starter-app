@@ -8,7 +8,7 @@ import { useCrumbs } from '../hooks';
 // structure of each cell in the name column
 export const NameCell = ({ row }) => (
   <td>
-    <Link to={`/kapps/${row.get('slug')}/forms`}>{row.get('name')}</Link>
+    <Link to={`/${row.get('slug')}`}>{row.get('name')}</Link>
     <br />
     <small>{row.get('slug')}</small>
   </td>
@@ -22,8 +22,8 @@ export const DateCell = ({ row }) => (
 // structure of each cell in the actions column
 export const ActionsCell = ({ row }) => (
   <td className="actions-cell">
-    <Link to={`/app/console/#/kapps/${row.get('slug')}/settings/details`}>
-      <button className="btn btn-xs btn-danger">
+    <Link to={`/app/console/#/${row.get('slug')}/settings/details`}>
+      <button className="btn btn-xs btn-danger" disabled={true}>
         <span className="fa fa-pencil fa-fw" /> Edit
       </button>
     </Link>

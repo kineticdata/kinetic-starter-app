@@ -11,6 +11,7 @@ import { SubmissionList } from './components/SubmissionList';
 import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
 import { useProfile, useSpace } from './hooks';
+import './assets/styles/master.scss'
 
 // use Wally for empty app
 export const EmptyBodyRow = () => <WallySpinner />;
