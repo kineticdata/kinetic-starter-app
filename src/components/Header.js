@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { logout } from '@kineticdata/react';
-import kineticLogo from '../assets/kinetic-logo.png';
+import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
-import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
+import {
+  Navbar,
+  NavbarBrand,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 
 // Dropdown menu with user info, link to profile page, and logout
 const HeaderDropdownMenu = ({ profile }) => {
@@ -11,44 +18,51 @@ const HeaderDropdownMenu = ({ profile }) => {
 
   return (
     <Dropdown isOpen={isOpen} toggle={toggle}>
-      <DropdownToggle role="button" className="profile-menu-button">
-        {/* <span className="fa fa-caret-down" /> */}
+      <DropdownToggle role="button" caret>
         {profile ? profile.displayName : 'Menu'}
       </DropdownToggle>
-      <DropdownMenu
-        right
-        className={`profile-menu profile-menu-${isOpen ? 'open' : 'closed'}`}
-      >
-        <div className="profile-menu-header">
-          <h5>
-            {profile ? profile.displayName : 'Username'}
-            <br />
-            <small>{profile ? profile.email : 'Email'}</small>
-          </h5>
-        </div>
-        <div className="profile-menu-links">
+      <DropdownMenu>
+        <DropdownItem>
+          <>
+            <h5>
+              {profile ? profile.displayName : 'Username'}
+              <br />
+              <small>{profile ? profile.email : 'Email'}</small>
+            </h5>
+          </>
+        </DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem>
           <Link to="/profile" className="profile-menu-link" onClick={toggle}>
             View/Edit Profile
           </Link>
+        </DropdownItem>
+        <DropdownItem>
           <Link to="/" onClick={logout} className="profile-menu-link">
             Logout
           </Link>
-        </div>
+        </DropdownItem>
+        <div className="profile-menu-links"></div>
       </DropdownMenu>
     </Dropdown>
   );
 };
 
 export const Header = ({ space, loggedIn, profile }) => (
-  <header className="public">
-    <Link to="/">
-      <img src={kineticLogo} className="header-logo" alt="Kinetic Data logo" />
-    </Link>
-    <h1>{space ? space.name : 'Public'}</h1>
+  <Navbar>
+    <NavbarBrand href="/">
+      <img
+        alt="logo"
+        src={logo}
+        style={{
+          height: 60,
+        }}
+      />
+    </NavbarBrand>
     {loggedIn && (
       <div className="buttons">
         <HeaderDropdownMenu profile={profile} />
       </div>
     )}
-  </header>
+  </Navbar>
 );

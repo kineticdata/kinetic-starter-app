@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { App, EmptyBodyRow } from './App';
-import * as TableComponents from './components/TableComponents';
+import * as LayoutComponents from './components/Layouts';
 import { KineticLib, history as libHistory } from '@kineticdata/react';
 import { store as reduxStore } from './redux/store'
 import {ConnectedRouter} from "connected-react-router";
@@ -22,7 +22,7 @@ export const store = reduxStore;
 export const history = libHistory;
 
 ReactDOM.render(
-  <KineticLib components={{ ...TableComponents, EmptyBodyRow }} locale="en">
+  <KineticLib components={{ ...LayoutComponents, EmptyBodyRow }} locale="en">
     {kineticProps => <Provider store={store}>
       <ConnectedRouter history={history}>
         <App globals={globals} {...kineticProps} />

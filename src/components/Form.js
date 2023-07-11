@@ -1,19 +1,15 @@
 import React, { useCallback } from 'react';
 import { CoreForm } from '@kineticdata/react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useCrumbs, useForm } from '../hooks';
+import { useForm } from '../hooks';
 import { CALENDAR_KAPP_SLUG } from '../constants';
-import {Calendar} from "./calendar/Calendar";
 
-export const Form = ({ setCrumbs, edit }) => {
+export const Form = ({ edit }) => {
   const history = useHistory();
   const { formSlug, id } = useParams();
   const kappSlug = CALENDAR_KAPP_SLUG;
   // Fetch the form.
   const form = useForm(kappSlug, formSlug);
-
-  // set navigation breadcrumbs using fetched form info
-  useCrumbs({ setCrumbs, form, kappSlug, formSlug, id });
 
   const handleCreated = useCallback(
     ({ submission }) => {

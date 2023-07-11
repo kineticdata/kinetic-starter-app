@@ -6,10 +6,9 @@ import {
   unmountTable,
   refetchTable,
 } from '@kineticdata/react';
-import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import * as TableComponents from './TableComponents';
-import { useCrumbs, useForm } from '../hooks';
+import * as TableComponents from './Layouts';
+import { CALENDAR_KAPP_SLUG, CALENDAR_SETTINGS_FORM_SLUG } from '../constants';
 
 // define the fields used for filtering
 const FilterFormLayout = TableComponents.generateFilterFormLayout([
@@ -25,15 +24,11 @@ const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
   errorMessage: 'Error',
 });
 
-// used to build the table key necessary for mounting the table / rendering the filter form
-const submissionsTableKey = (kappSlug, formSlug) =>
-  `${kappSlug}-${formSlug}-tablekey`;
+export const CalendarSettings = () => {
+  const kappSlug = CALENDAR_KAPP_SLUG;
+  const formSlug = CALENDAR_SETTINGS_FORM_SLUG;
+  const tableKey = `settings-tablekey`;
 
-export const SubmissionList = ({ setCrumbs }) => {
-  const { kappSlug, formSlug } = useParams();
-
-  // build table key and mount table since we are using the filter form
-  const tableKey = submissionsTableKey(kappSlug, formSlug);
   useEffect(() => {
     mountTable(tableKey);
     return () => {
@@ -41,26 +36,18 @@ export const SubmissionList = ({ setCrumbs }) => {
     };
   });
 
-  // Fetch the form.
-  const form = useForm(kappSlug, formSlug);
-  useCrumbs({ setCrumbs, form, kappSlug, formSlug });
-
   const handleDelete = row => () => {
     deleteSubmission({ id: row.get('id') }).then(() => refetchTable(tableKey));
   };
 
   // structure for each cell in the handle column
-  const HandleCell = ({ row }) => {
+  const LabelCell = ({ row }) => {
     const isDraft = row.get('coreState') === 'Draft';
 
     return (
       <td>
-        <Link
-          to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get(
-            'id',
-          )}${isDraft ? '/edit' : ''}`}
-        >
-          {row.get('handle')}
+        <Link to={`/settings/${row.get('id')}${isDraft ? '/edit' : ''}`}>
+          {row.get('label')}
         </Link>
       </td>
     );
@@ -74,7 +61,7 @@ export const SubmissionList = ({ setCrumbs }) => {
     return (
       <td className="actions-cell">
         <Link
-          to={`/kapps/${kappSlug}/forms/${formSlug}/submissions/${row.get(
+          to={`/settings/${row.get(
             'id',
           )}${isDraft ? '/edit' : ''}`}
         >
@@ -91,7 +78,7 @@ export const SubmissionList = ({ setCrumbs }) => {
       tableKey={tableKey} // set so we can mount the table / render the filter form
       kappSlug={kappSlug}
       formSlug={formSlug}
-      columnSet={['handle', 'submittedBy', 'coreState', 'actions']}
+      columnSet={['label', 'updatedAt', 'actions']}
       components={{
         ...TableComponents,
         FilterFormLayout,
@@ -107,28 +94,23 @@ export const SubmissionList = ({ setCrumbs }) => {
         },
       ]}
       alterColumns={{
-        handle: {
+        label: {
           components: {
-            BodyCell: HandleCell,
+            BodyCell: LabelCell,
           },
         },
       }}
     >
-      {({ pagination, table, filter }) => (
+      {({ table }) => (
         <>
           <div className="header-title-container">
-            <h1>{form && `${form.name}: `}Submissions</h1>
-            <Link to={`/kapps/${kappSlug}/forms/${formSlug}`}>
-              <button>Submit New</button>
+            <h1>Calendar Configurations</h1>
+            <Link to={`/settings/new`}>
+              <button>New</button>
             </Link>
           </div>
           <div>
-            <div className="table-filter">
-              <h3>Filter:</h3>
-              {filter}
-            </div>
             {table}
-            {pagination}
           </div>
         </>
       )}

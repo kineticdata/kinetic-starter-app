@@ -35,11 +35,11 @@ $grays: (
 );
 
 // Standard colors
-$blue: #3f46d6;
+$blue: #0060AE;
 $orange: #f36c23;
 $green: #68c88f;
 $cyan: #0dcaf0;
-$red: #dc3545;
+$red: #FF0000;
 $yellow: #ffb73b;
 
 // Theme color variable sets
@@ -48,7 +48,7 @@ $primary-dark: #293e7c;
 $primary-medium: #979cfe;
 $primary-light: #ecedfe;
 
-$secondary: $orange;
+$secondary: $red;
 $secondary-dark: #ca5d3c;
 $secondary-medium: #f8945f;
 $secondary-light: #fde5d8;
@@ -133,7 +133,7 @@ $supplemental-theme-colors: (
   'dark': $dark,
 );
 
-$body-bg: $gray-100;
+$body-bg: $white;
 $body-color: $gray-900;
 
 // Spacing
@@ -409,38 +409,3 @@ $modal-xl: 1140px;
 $card-border-width: 0;
 $card-border-radius: $border-radius-xl;
 $card-cap-bg: $white;
-
-// SVG Image Overrides (and custom images) - data:images are not allowed in CSP header
-$accordion-button-icon: url('~@kineticdata/ui/assets/icons/sass/chevron-down_primary.svg');
-$accordion-button-active-icon: url('~@kineticdata/ui/assets/icons/sass/chevron-down_primary.svg');
-$breadcrumb-item-divider: url('~@kineticdata/ui/assets/icons/sass/chevron-right_medium.svg');
-$btn-close-bg: url('~@kineticdata/ui/assets/icons/sass/x_primary.svg');
-$btn-close-bg-medium: url('~@kineticdata/ui/assets/icons/sass/x_medium.svg');
-$btn-close-bg-primary: url('~@kineticdata/ui/assets/icons/sass/x_primary.svg');
-$btn-close-bg-primary-light: url('~@kineticdata/ui/assets/icons/sass/x_primary-light.svg');
-$btn-close-bg-primary-dark: url('~@kineticdata/ui/assets/icons/sass/x_primary-dark.svg');
-$btn-close-bg-dark: url('~@kineticdata/ui/assets/icons/sass/x_dark.svg');
-$btn-close-bg-danger: url('~@kineticdata/ui/assets/icons/sass/x_danger.svg');
-$btn-close-bg-success-dark: url('~@kineticdata/ui/assets/icons/sass/x_success-dark.svg');
-$btn-close-bg-warning-dark: url('~@kineticdata/ui/assets/icons/sass/x_warning-dark.svg');
-$carousel-control-prev-icon-bg: url('~@kineticdata/ui/assets/icons/sass/chevron-left_white.svg');
-$carousel-control-next-icon-bg: url('~@kineticdata/ui/assets/icons/sass/chevron-right_white.svg');
-$form-attachment-indicator-disabled: url('~@kineticdata/ui/assets/icons/sass/attachment_medium.svg');
-$form-attachment-indicator: url('~@kineticdata/ui/assets/icons/sass/attachment_primary.svg');
-$form-check-input-checked-bg-image: url('~@kineticdata/ui/assets/icons/sass/check_white.svg');
-$form-check-radio-checked-bg-image: url('~@kineticdata/ui/assets/icons/sass/dot_white.svg');
-$form-check-input-indeterminate-bg-image: url('~@kineticdata/ui/assets/icons/sass/dash_white.svg');
-$form-search-indicator: url('~@kineticdata/ui/assets/icons/sass/search_medium.svg');
-$form-search-indicator-focus: url('~@kineticdata/ui/assets/icons/sass/search_primary.svg');
-$form-select-indicator: url('~@kineticdata/ui/assets/icons/sass/chevron-down_medium.svg');
-$form-select-indicator-focus: url('~@kineticdata/ui/assets/icons/sass/chevron-down_primary.svg');
-$form-switch-bg-image: url('~@kineticdata/ui/assets/icons/sass/form-switch_border.svg');
-$form-switch-focus-bg-image: url('~@kineticdata/ui/assets/icons/sass/form-switch_primary-medium.svg');
-$form-switch-checked-bg-image: url('~@kineticdata/ui/assets/icons/sass/form-switch_white.svg');
-$form-feedback-icon-valid: url('~@kineticdata/ui/assets/icons/sass/check_success.svg');
-$form-feedback-icon-invalid: url('~@kineticdata/ui/assets/icons/sass/alert-circle_danger.svg');
-$navbar-dark-toggler-icon-bg: url('~@kineticdata/ui/assets/icons/sass/menu_light.svg');
-$navbar-light-toggler-icon-bg: url('~@kineticdata/ui/assets/icons/sass/menu_dark.svg');
-$table-sort-icon-bg: url('~@kineticdata/ui/assets/icons/sass/sort_dark.svg');
-$table-sort-asc-icon-bg: url('~@kineticdata/ui/assets/icons/sass/sort-asc_dark.svg');
-$table-sort-desc-icon-bg: url('~@kineticdata/ui/assets/icons/sass/sort-desc_dark.svg');

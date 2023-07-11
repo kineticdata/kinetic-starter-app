@@ -1,7 +1,7 @@
 import React from "react";
 
 export const WallySpinner = () => (
-  <div className="wally-loader-container">
+  <div className="mx-auto" style={{"width": "500px"}}>
     <svg
       className="wally-loader__spinner"
       stroke="#FFF"
