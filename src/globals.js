@@ -13,6 +13,7 @@ import moment from 'moment';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Calendar } from './components/calendar/Calendar';
+import {KineticLib} from "@kineticdata/react";
 import {store} from "./redux/store";
 import {Provider} from "react-redux";
 
@@ -142,13 +143,16 @@ window.bundle.helpers.calendar = (div, options = {}) => {
   }
 
   ReactDOM.render(
-    <Provider store={store}>
-    <Calendar
-      slug={options.calendarSlug}
-      size={options.size}
-      timezone={options.timezone}
-      title={options.title}
-    /></Provider>,
+    <KineticLib locale="en">
+      <Provider store={store}>
+        <Calendar
+          slug={options.calendarSlug}
+          size={options.size}
+          timezone={options.timezone}
+          title={options.title}
+        />
+      </Provider>
+    </KineticLib>,
     div,
   );
 };
