@@ -60,11 +60,7 @@ export const CalendarSettings = () => {
 
     return (
       <td className="actions-cell">
-        <Link
-          to={`/settings/${row.get(
-            'id',
-          )}${isDraft ? '/edit' : ''}`}
-        >
+        <Link to={`/settings/${row.get('id')}${isDraft ? '/edit' : ''}`}>
           <button>{isDraft ? 'Edit' : 'Review'}</button>
         </Link>
         <button onClick={handleDelete(row)}>Delete</button>
@@ -109,9 +105,7 @@ export const CalendarSettings = () => {
               <button>New</button>
             </Link>
           </div>
-          <div>
-            {table}
-          </div>
+          <div>{table}</div>
         </>
       )}
     </SubmissionTable>

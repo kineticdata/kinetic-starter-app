@@ -5,7 +5,7 @@ import { compose, withHandlers } from 'recompose';
 import moment from 'moment';
 import { getDetail } from './calendarHelpers';
 import { actions as calendarActions } from '../../redux/modules/calendar';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 
 const ErrorMessage = () => (
   <div>
@@ -241,16 +241,15 @@ export const EventModal = props => {
           <span>
             <I18n>{title ? title : event.title}</I18n>
           </span>
-          {eventForm &&
-            eventReviewMode && (
-              <button
-                type="button"
-                className="btn btn-link"
-                onClick={() => setEventReviewMode(false)}
-              >
-                <I18n>Edit Event</I18n>
-              </button>
-            )}
+          {eventForm && eventReviewMode && (
+            <button
+              type="button"
+              className="btn btn-link"
+              onClick={() => setEventReviewMode(false)}
+            >
+              <I18n>Edit Event</I18n>
+            </button>
+          )}
         </h4>
         {additionalHeadElements ? (
           additionalHeadElements()

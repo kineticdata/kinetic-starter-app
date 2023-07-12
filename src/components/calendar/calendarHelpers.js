@@ -115,9 +115,11 @@ export const getFilterOptions = (events, key, filter) => {
 
   // Get a set of filters from the previous view of the calendar.
   let existingOptionsSet = Set();
-  filter.filter(property => Map.isMap(property)).forEach((_opt, optionKey) => {
-    existingOptionsSet = existingOptionsSet.add(optionKey);
-  });
+  filter
+    .filter(property => Map.isMap(property))
+    .forEach((_opt, optionKey) => {
+      existingOptionsSet = existingOptionsSet.add(optionKey);
+    });
 
   // Remove existing options so that new options can be initialized.
   const newOptionsSet = eventFilterOptionsSet.subtract(existingOptionsSet);

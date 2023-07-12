@@ -46,7 +46,12 @@ export const Login = ({
               value={password}
             />
           </div>
-          <button className="btn btn-primary" disabled={pending} type="submit" onClick={onSubmit}>
+          <button
+            className="btn btn-primary"
+            disabled={pending}
+            type="submit"
+            onClick={onSubmit}
+          >
             Login
           </button>
         </form>

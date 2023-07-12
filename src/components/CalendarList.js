@@ -7,9 +7,7 @@ import { CALENDAR_KAPP_SLUG } from '../constants';
 // structure for each cell in the name column
 export const NameCell = ({ tableOptions: { kappSlug }, row }) => (
   <td>
-    <Link to={`/calendar/${row.get('slug')}`}>
-      {row.get('name')}
-    </Link>
+    <Link to={`/calendar/${row.get('slug')}`}>{row.get('name')}</Link>
     <br />
     <small>{row.get('slug')}</small>
   </td>
@@ -31,7 +29,7 @@ const EmptyBodyRow = TableComponents.generateEmptyBodyRow({
 });
 
 export const CalendarList = () => {
-  const kappSlug  = CALENDAR_KAPP_SLUG;
+  const kappSlug = CALENDAR_KAPP_SLUG;
 
   return (
     <FormTable

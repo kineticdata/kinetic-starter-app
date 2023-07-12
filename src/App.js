@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import { WallySpinner } from './components/Loading';
 import { Login } from './components/Login';
 import { Header } from './components/Header';
@@ -15,7 +15,6 @@ import './assets/styles/master.scss';
 export const EmptyBodyRow = () => <WallySpinner />;
 export const NotFound = props => <h1>Page Not Found</h1>;
 
-
 export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
   // fetch and set space
   const space = useSpace();
@@ -29,9 +28,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
       {!initialized ? (
         <WallySpinner />
       ) : loggedIn ? (
-        <main
-          className="container-fluid m-2"
-        >
+        <main className="container-fluid m-2">
           <Switch>
             <Route
               path="/profile"

@@ -12,7 +12,7 @@ import {
   setEventsColor,
 } from './calendarHelpers';
 import { CalendarWrapper } from './CalendarWrapper';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 export { refetchCalendarEvents };
 
 export const handleMainDateSelect = props => args => {
@@ -280,22 +280,14 @@ const mapDispatchToProps = {
 
 export const Calendar = compose(
   // calendarKey is used as a prop in mapStateToProps so it must come before.
-  withState(
-    'calendarKey',
-    'setCalendarKey',
-    props => (props.calendarKey ? props.calendarKey : generateKey()),
+  withState('calendarKey', 'setCalendarKey', props =>
+    props.calendarKey ? props.calendarKey : generateKey(),
   ),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  withState(
-    'timezone',
-    'setTimezone',
-    props =>
-      props.timezone === false || props.timezone
-        ? props.timezone
-        : moment.tz.guess(),
+  connect(mapStateToProps, mapDispatchToProps),
+  withState('timezone', 'setTimezone', props =>
+    props.timezone === false || props.timezone
+      ? props.timezone
+      : moment.tz.guess(),
   ),
   withHandlers({
     handleMainDateSelect,

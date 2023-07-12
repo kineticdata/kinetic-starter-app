@@ -28,7 +28,7 @@ export const Profile = ({ profile, setCrumbs }) => {
   const handleSave = useCallback(() => () => history.push('/'), [history]);
 
   return (
-    <div className="mx-auto" style={{"width": "500px"}}>
+    <div className="mx-auto" style={{ width: '500px' }}>
       <h1>Edit Profile</h1>
       <div className="profile-form">
         <ProfileForm

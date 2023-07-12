@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import { App, EmptyBodyRow } from './App';
 import * as LayoutComponents from './components/Layouts';
 import { KineticLib, history as libHistory } from '@kineticdata/react';
-import { store as reduxStore } from './redux/store'
-import {ConnectedRouter} from "connected-react-router";
+import { store as reduxStore } from './redux/store';
+import { ConnectedRouter } from 'connected-react-router';
 
 // Asynchronously import the global dependencies that are used in the embedded
 // forms. Note that we deliberately do this as a const so that it should start
@@ -23,11 +23,13 @@ export const history = libHistory;
 
 ReactDOM.render(
   <KineticLib components={{ ...LayoutComponents, EmptyBodyRow }} locale="en">
-    {kineticProps => <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <App globals={globals} {...kineticProps} />
-      </ConnectedRouter>
-    </Provider>}
+    {kineticProps => (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App globals={globals} {...kineticProps} />
+        </ConnectedRouter>
+      </Provider>
+    )}
   </KineticLib>,
   document.getElementById('root'),
 );

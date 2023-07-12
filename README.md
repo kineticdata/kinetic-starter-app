@@ -1,9 +1,10 @@
 # Kinetic Starter App
 
-This project is meant to be a no frills starting point for kinetic app bundle development. The bundle exposing public pages is also a non-trivial use case that our bundle uses out of the box and introduces client-side routing into the mix. 
+This project is meant to be a no frills starting point for kinetic app bundle development. The bundle exposing public pages is also a non-trivial use case that our bundle uses out of the box and introduces client-side routing into the mix.
 
 ## Kinetic Component Library
-Kinetic data has developed the [React Kinetic Library (RKL) component library](https://components.kineticdata.com/) for use with the Kinetic Platform.  RKL provides API and UI elements that enhances the developer experience through the use of shared components.
+
+Kinetic data has developed the [React Kinetic Library (RKL) component library](https://components.kineticdata.com/) for use with the Kinetic Platform. RKL provides API and UI elements that enhances the developer experience through the use of shared components.
 
 ## KineticLib Component
 
@@ -11,22 +12,22 @@ Kinetic data has developed the [React Kinetic Library (RKL) component library](h
 
 The following are the props that get passed to the render component passed to `KineticLib`
 
-* `initialized` - True when we have determined whether or not the user is authenticated. If the user is initially
-                  authenticated we will also fetch the JWT before this is set to true
-* `loggedIn` - The user has been authenticated and should be able to navigate to areas of the application that require 
-               authentication
-* `timedOut` - The user was previously authenticated but a subsequent request has returned a 401 and the user needs to
-               reauthenticate. We leave `loggedIn` true because we do not necessarily want to redirect from the current
-               page and erase user state.
-* `loginProps` - Props intended for use by a `Login` component
-    * `error` - Error returned from failed authentication attempt
-    * `onChangePassword` - Change event handler to place placed on the password field
-    * `onChangeUsername` - Change event handler to place placed on the username field
-    * `onLogin` - Submit event to be placed on the submit button of the login form, also takes a second argument that is
-                  a callback invoked when the user successfully authenticates
-    * `password` - Value to be present in the password field
-    * `pending` - Currently attempting to authenticate or retrieving JWT
-    * `username` - Value to be present in the username field
+- `initialized` - True when we have determined whether or not the user is authenticated. If the user is initially
+  authenticated we will also fetch the JWT before this is set to true
+- `loggedIn` - The user has been authenticated and should be able to navigate to areas of the application that require
+  authentication
+- `timedOut` - The user was previously authenticated but a subsequent request has returned a 401 and the user needs to
+  reauthenticate. We leave `loggedIn` true because we do not necessarily want to redirect from the current
+  page and erase user state.
+- `loginProps` - Props intended for use by a `Login` component
+  - `error` - Error returned from failed authentication attempt
+  - `onChangePassword` - Change event handler to place placed on the password field
+  - `onChangeUsername` - Change event handler to place placed on the username field
+  - `onLogin` - Submit event to be placed on the submit button of the login form, also takes a second argument that is
+    a callback invoked when the user successfully authenticates
+  - `password` - Value to be present in the password field
+  - `pending` - Currently attempting to authenticate or retrieving JWT
+  - `username` - Value to be present in the username field
 
 ## Login Component
 
@@ -55,4 +56,4 @@ render `<a>` or `<button>`. We thought this added more complication to the imple
 
 The cancel button on the modal login is just passed the same function as the normal logout button. Even though the user
 is currently unauthenticated this indicates to the `KineticLib` component that the user intends to fully logout, it will
-then update its internal state setting `loggedIn` to false and in our implementation the user will be redirected to "/". 
+then update its internal state setting `loggedIn` to false and in our implementation the user will be redirected to "/".

@@ -13,9 +13,9 @@ import moment from 'moment';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Calendar } from './components/calendar/Calendar';
-import {KineticLib} from "@kineticdata/react";
-import {store} from "./redux/store";
-import {Provider} from "react-redux";
+import { KineticLib } from '@kineticdata/react';
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
 
 jquery.ajaxSetup({
   xhrFields: {
@@ -124,7 +124,7 @@ window.bundle.config.ready = function(form) {
  * @param options {
  *    div:              DOM Element *required*
  *        Element element the calendar is anchored to.
- *
+ * 
  *    calendarSlug:     Slug of calendar *required*
  *        The slug of the calendar, must match a calendar configuration
  *        in the calendar configuration datastore.
@@ -146,6 +146,8 @@ window.bundle.helpers.calendar = (div, options = {}) => {
     <KineticLib locale="en">
       <Provider store={store}>
         <Calendar
+          kappSlug={options.kappSlug}
+          formSlug={options.formSlug}
           slug={options.calendarSlug}
           size={options.size}
           timezone={options.timezone}

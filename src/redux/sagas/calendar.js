@@ -150,16 +150,15 @@ export const mergeRelatedData = (
             ...event,
             ...detailArray
               .reduce((acc, ele) => {
-                acc = ele.map(
-                  (detail, detailKey) =>
-                    acc.has(detailKey)
-                      ? acc.get(detailKey).add(detail)
-                      : Set().add(detail),
+                acc = ele.map((detail, detailKey) =>
+                  acc.has(detailKey)
+                    ? acc.get(detailKey).add(detail)
+                    : Set().add(detail),
                 );
                 return acc;
               }, Map())
-              .map(
-                detail => (detail.size > 1 ? detail.toJS() : detail.first(0)),
+              .map(detail =>
+                detail.size > 1 ? detail.toJS() : detail.first(0),
               )
               .toJS(),
           };
@@ -261,10 +260,10 @@ export const getFormatProperty = (
             })
             .join('')
         : details.has(coreMapping[property])
-          ? details.get(coreMapping[property])
-          : event[coreMapping[property]]
-            ? event[coreMapping[property]]
-            : coreMapping[property];
+        ? details.get(coreMapping[property])
+        : event[coreMapping[property]]
+        ? event[coreMapping[property]]
+        : coreMapping[property];
     default:
       return event[coreMapping[property]];
   }
@@ -338,33 +337,35 @@ export function* fetchCalendarConfigSaga({ payload }) {
       let sources = parseJson(submission.values['Event Types'], true);
       sources =
         sources &&
-        sources.filter(source => source.valid).reduce((acc, sourceConfig) => {
-          const key = generateKey();
-          return acc.set(
-            key,
-            fromJS({
-              name: sourceConfig.name ? sourceConfig.name : '--Blank--',
-              color: sourceConfig.color ? sourceConfig.color : null,
-              // TODO: if prop exists what do we do?  question open to Matt H
-              defaultFilter: sourceConfig.defaultFilter,
-              source: sourceConfig.source,
-              relationships: sourceConfig.relationships,
-              coreMapping: sourceConfig.coreMapping
-                ? sourceConfig.coreMapping
-                : {},
-              detailMapping: sourceConfig.detailMapping
-                ? OrderedMap(sourceConfig.detailMapping)
-                : {},
-              filterMapping: sourceConfig.filterMapping
-                ? sourceConfig.filterMapping.map(filter => ({
-                    ...filter,
-                    id: generateKey(),
-                    values: filter.values,
-                  }))
-                : [],
-            }),
-          );
-        }, Map());
+        sources
+          .filter(source => source.valid)
+          .reduce((acc, sourceConfig) => {
+            const key = generateKey();
+            return acc.set(
+              key,
+              fromJS({
+                name: sourceConfig.name ? sourceConfig.name : '--Blank--',
+                color: sourceConfig.color ? sourceConfig.color : null,
+                // TODO: if prop exists what do we do?  question open to Matt H
+                defaultFilter: sourceConfig.defaultFilter,
+                source: sourceConfig.source,
+                relationships: sourceConfig.relationships,
+                coreMapping: sourceConfig.coreMapping
+                  ? sourceConfig.coreMapping
+                  : {},
+                detailMapping: sourceConfig.detailMapping
+                  ? OrderedMap(sourceConfig.detailMapping)
+                  : {},
+                filterMapping: sourceConfig.filterMapping
+                  ? sourceConfig.filterMapping.map(filter => ({
+                      ...filter,
+                      id: generateKey(),
+                      values: filter.values,
+                    }))
+                  : [],
+              }),
+            );
+          }, Map());
 
       // Parse Related Data
       let relatedDataMapping;

@@ -63,8 +63,8 @@ export const getAttributeValue = (
   (attributesMap
     ? attributesMap[attrName] && attributesMap[attrName][0]
     : isarray(attributes)
-      ? attributes.filter(a => a.name === attrName).map(a => a.values[0])[0]
-      : attributes && attributes[attrName] && attributes[attrName][0]) ||
+    ? attributes.filter(a => a.name === attrName).map(a => a.values[0])[0]
+    : attributes && attributes[attrName] && attributes[attrName][0]) ||
   defaultValue;
 
 export const getProfileAttributeValue = (
@@ -84,8 +84,8 @@ export const getAttributeValues = (
   const valuesArray = attributesMap
     ? attributesMap[attrName]
     : isarray(attributes)
-      ? attributes.filter(a => a.name === attrName).map(a => a.values)[0]
-      : attributes && attributes[attrName];
+    ? attributes.filter(a => a.name === attrName).map(a => a.values)[0]
+    : attributes && attributes[attrName];
   return !valuesArray || valuesArray.length === 0 ? defaultValue : valuesArray;
 };
 
@@ -108,8 +108,8 @@ export const hasAttributeValue = (
   const valuesArray = attributesMap
     ? attributesMap[attrName]
     : isarray(attributes)
-      ? attributes.filter(a => a.name === attrName).map(a => a.values)[0]
-      : attributes && attributes[attrName];
+    ? attributes.filter(a => a.name === attrName).map(a => a.values)[0]
+    : attributes && attributes[attrName];
   if (!valuesArray || valuesArray.length === 0) {
     return false;
   }
