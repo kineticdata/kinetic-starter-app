@@ -17,6 +17,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@uiw/react-textarea-code-editor": "^2.1.7",
     "bootstrap": "4.3.1",
     "classnames": "^2.3.2",
     "connected-react-router": "^6.6.1",
@@ -45,10 +46,11 @@
     "redux-form": "^5.3.6",
     "redux-saga": "^0.16.0",
     "rrule": "^2.7.2",
-    "sass": "^1.63.6"
+    "sass": "^1.63.6",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "prettier": "~1.13.3"
+    "inquirer": "^8.0.0"
   },
   "scripts": {
     "prestart": "node ./src/setupEnv.js",
@@ -74,8 +76,5 @@
       "last 1 safari version",
       "ie 11"
     ]
-  },
-  "devDependencies": {
-    "inquirer": "^8.0.0"
   }
 }

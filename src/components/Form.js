@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { CoreForm } from '@kineticdata/react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { useForm } from '../hooks';
 import { CALENDAR_KAPP_SLUG } from '../constants';
 import querystring from 'query-string';
 
@@ -16,13 +16,11 @@ const valuesFromQueryParams = queryParams => {
   }, {});
 };
 
-export const Form = ({ edit }) => {
+export const Form = ({ edit, profile }) => {
   const history = useHistory();
   const { search } = useLocation();
   const { formSlug, id } = useParams();
   const kappSlug = CALENDAR_KAPP_SLUG;
-  // Fetch the form.
-  const form = useForm(kappSlug, formSlug);
 
   const handleCreated = useCallback(
     ({ submission }) => {
@@ -51,7 +49,7 @@ export const Form = ({ edit }) => {
 
   return (
     <div>
-      <h1>{form && form.name}</h1>
+      {profile.spaceAdmin && <Link to={`/calendar/${formSlug}/settings`}>Settings</Link>}
       {id ? (
         <CoreForm
           submission={id}

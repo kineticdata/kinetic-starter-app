@@ -72,7 +72,10 @@ export const CalendarWrapper = props => {
               },
               eventModalOpen: props.eventModalOpen,
               event: props.mainCalendarEvent,
-              eventForm: props.calendarConfig && props.calendarConfig.eventForm,
+              eventForm:
+                props.calendarConfig &&
+                props.calendarConfig.eventForm &&
+                Object.keys(props.calendarConfig.eventForm).length > 0,
               timezone: props.timezone,
               fetchEvents: props.fetchCalendarEvents,
               calendarKey: props.calendarKey,
@@ -90,7 +93,11 @@ export const CalendarWrapper = props => {
             event={props.mainCalendarEvent}
             timezone={props.timezone}
             eventModalOpen={props.eventModalOpen}
-            eventForm={props.calendarConfig && props.calendarConfig.eventForm}
+            eventForm={
+              props.calendarConfig &&
+              props.calendarConfig.eventForm &&
+              Object.keys(props.calendarConfig.eventForm).length > 0
+            }
             calendarKey={props.calendarKey}
             details={renderEventDetail => {
               const details = props.mainCalendarEvent.details;

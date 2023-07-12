@@ -3,7 +3,7 @@ import moment from 'moment';
 import { store } from '../../index';
 import { namespaceBuilder, withPayload, noPayload } from '../../utils';
 import { generateKey } from '@kineticdata/react';
-const ns = namespaceBuilder('common/calendar');
+const ns = namespaceBuilder('calendar');
 
 export const types = {
   FETCH_CALENDAR_CONFIGURATION: ns('FETCH_CALENDAR_CONFIGURATION'),

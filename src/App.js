@@ -44,15 +44,13 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
               )}
               exact
             />
-
-            <Route path="/calendar/:formSlug" render={() => <Form />} exact />
             <Route
-              path={['/settings']}
-              render={() => <CalendarSettings />}
+              path="/calendar/:formSlug"
+              render={() => <Form profile={profile} />}
               exact
             />
             <Route
-              path={['/settings/:id']}
+              path={['/calendar/:formSlug/settings']}
               render={() => <CalendarSettings />}
               exact
             />

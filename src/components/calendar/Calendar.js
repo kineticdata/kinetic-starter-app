@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 export { refetchCalendarEvents };
 
 export const handleMainDateSelect = props => args => {
+  console.log(args);
   let modalOpen;
   if (args == null) {
     modalOpen = false;
@@ -261,7 +262,10 @@ const mapStateToProps = (state, props) => {
     filters: calendar.filters,
     calendarConfig: calendar.calendarConfig,
     timezones: fromJS(state.calendar.get('timezones')),
-    newDateForm: calendar.calendarConfig && calendar.calendarConfig.newDateForm,
+    newDateForm:
+      calendar.calendarConfig &&
+      calendar.calendarConfig.newDateForm &&
+      Object.keys(calendar.calendarConfig.newDateForm).length > 0,
   };
 };
 
@@ -305,7 +309,8 @@ export const Calendar = compose(
   lifecycle({
     componentDidMount() {
       this.props.fetchConfig({
-        slug: this.props.slug,
+        kappSlug: this.props.kappSlug,
+        formSlug: this.props.formSlug,
         key: this.props.calendarKey,
         timezone: this.props.timezone,
       });

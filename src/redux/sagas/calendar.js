@@ -3,6 +3,7 @@ import {
   searchSubmissions,
   SubmissionSearch,
   fetchBridgedResource,
+  fetchForm,
 } from '@kineticdata/react';
 import { generateKey, bundle } from '@kineticdata/react';
 import { OrderedMap, Map, List, Set, fromJS } from 'immutable';
@@ -313,28 +314,19 @@ export function* fetchCalendarConfigSaga({ payload }) {
   // Fetch timezones
   yield call(fetchLocaleMetaTask);
 
-  const searchBuilder = new SubmissionSearch(true)
-    .includes(['details', 'values'])
-    .index('values[Status],values[Calendar Slug]')
-    .eq('values[Calendar Slug]', payload.slug)
-    .eq('values[Status]', 'Active');
-
-  const search = searchBuilder.build();
-  const { submissions, error } = yield call(searchSubmissions, {
-    search,
-    datastore: true,
-    form: 'calendar-configurations',
+  const { form, error } = yield call(fetchForm, {
+    kappSlug: payload.kappSlug,
+    formSlug: payload.formSlug,
+    include: 'details',
   });
 
   if (error) {
     // TODO handle error
   } else {
-    // The request to DS will only return one result because the index is Unique
-    const submission = submissions ? submissions[0] : null;
-
-    if (submission) {
+    if (form) {
       // Parse source data
-      let sources = parseJson(submission.values['Event Types'], true);
+      const config = parseJson(form.description, true);
+      let {sources, ...calendarConfig} = config
       sources =
         sources &&
         sources
@@ -369,14 +361,11 @@ export function* fetchCalendarConfigSaga({ payload }) {
 
       // Parse Related Data
       let relatedDataMapping;
-      if (submission.values['Related Data']) {
-        relatedDataMapping = fromJS(
-          parseJson(submission.values['Related Data']),
-        );
+      if (config.relatedData) {
+        relatedDataMapping = fromJS(config.relatedData);
       }
 
       // Parse Calendar Config data
-      const calendarConfig = parseJson(submission.values['Calendar Config']);
       yield put(
         actions.fetchCalendarEvents({
           key: payload.key,

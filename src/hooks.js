@@ -12,7 +12,7 @@ export const useForm = (kappSlug, formSlug) => {
 
   useEffect(() => {
     const fetchFormRequest = async () => {
-      const response = await fetchForm({ kappSlug, formSlug, include: 'kapp' });
+      const response = await fetchForm({ kappSlug, formSlug, include: 'details' });
       setForm(response.form);
     };
 
