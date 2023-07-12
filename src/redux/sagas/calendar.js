@@ -1,12 +1,10 @@
 import { call, put, all, select, takeEvery } from 'redux-saga/effects';
 import {
-  searchSubmissions,
-  SubmissionSearch,
   fetchBridgedResource,
   fetchForm,
 } from '@kineticdata/react';
 import { generateKey, bundle } from '@kineticdata/react';
-import { OrderedMap, Map, List, Set, fromJS } from 'immutable';
+import { OrderedMap, Map, fromJS } from 'immutable';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -63,134 +61,6 @@ export const getResources = (acc, mapping, key, date, calendarView) => {
     values,
   });
   return acc;
-};
-
-export const prefixKeys = (data, prefix) =>
-  data.mapKeys(key => `${prefix}:${key}`);
-
-/**
- * Check if the detail mapping for the detail is multiValue and if the value
- * for the event is an array.
- *
- * @param {*} detailMapping
- * @param {*} event
- * @param {*} itemId
- */
-export const isMultiValue = (detailMapping, event, itemId) => {
-  let isMultiValue =
-    detailMapping.has(itemId) &&
-    detailMapping.get(itemId).type === 'multiValue';
-
-  const isJson = parseJson(event[itemId], false);
-  if (isMultiValue && !Array.isArray(isJson)) {
-    console.warn(
-      `Detail mapping for ${itemId} is configured for multiValue but event detail is not an array of values.`,
-    );
-  }
-
-  return isMultiValue && Array.isArray(isJson);
-};
-
-export const findRelatedData = (
-  relatedData,
-  relatedDataKey,
-  relatedDataId,
-  eventItemId,
-) =>
-  relatedData.get(relatedDataKey).find(ele => {
-    if (!ele.has(relatedDataId)) {
-      console.warn(`Related data does not have id '${relatedDataId}'.`);
-    }
-
-    return ele.get(relatedDataId) === eventItemId;
-  });
-
-/**
- * merge event with related data using the relationships configuration.
- *
- * @param {*} events
- * @param {*} relatedData
- * @param {*} relationships
- * @returns
- */
-export const mergeRelatedData = (
-  event, // event can get mutated
-  relatedData,
-  relationships,
-  detailMapping,
-) => {
-  // Extend event with related data for every relationship.
-  relationships.forEach(relationship => {
-    const { relatedDataKey, relatedDataId, itemId } = relationship.toJS();
-
-    // Update events only if related data is configured for the relationship.
-    if (relatedData.has(relatedDataKey)) {
-      // Update event only if event had a detail mapping that matches the relationship.
-      if (event.hasOwnProperty(itemId)) {
-        // True if detail mapping is 'multiVariable' and event detail is an array.
-        if (isMultiValue(detailMapping, event, itemId)) {
-          let detailArray = List();
-
-          parseJson(event[itemId]).forEach(id => {
-            let data = findRelatedData(
-              relatedData,
-              relatedDataKey,
-              relatedDataId,
-              id,
-            );
-            // When data is undefined don't attempt to update the event.
-            if (data) {
-              // // Add to the arrays of related data.
-              detailArray = detailArray.push(
-                (data = prefixKeys(data, relatedDataKey)),
-              );
-            }
-          });
-
-          event = {
-            ...event,
-            ...detailArray
-              .reduce((acc, ele) => {
-                acc = ele.map((detail, detailKey) =>
-                  acc.has(detailKey)
-                    ? acc.get(detailKey).add(detail)
-                    : Set().add(detail),
-                );
-                return acc;
-              }, Map())
-              .map(detail =>
-                detail.size > 1 ? detail.toJS() : detail.first(0),
-              )
-              .toJS(),
-          };
-        } else {
-          let data = findRelatedData(
-            relatedData,
-            relatedDataKey,
-            relatedDataId,
-            event[itemId],
-          );
-
-          // When data is undefined don't attempt to update the event.
-          if (data) {
-            data = prefixKeys(data, relatedDataKey);
-            event = { ...event, ...data.toJS() };
-          }
-        }
-      } else {
-        console.warn(
-          `Item Id '${itemId}' does not exist on the event's detail mappings.`,
-        );
-      }
-    } else {
-      console.warn(
-        `Relationship '${relatedDataKey}' does not exist in related data.`,
-      );
-    }
-
-    return event;
-  });
-  return event;
 };
 
 /**
@@ -341,7 +211,6 @@ export function* fetchCalendarConfigSaga({ payload }) {
                 // TODO: if prop exists what do we do?  question open to Matt H
                 defaultFilter: sourceConfig.defaultFilter,
                 source: sourceConfig.source,
-                relationships: sourceConfig.relationships,
                 coreMapping: sourceConfig.coreMapping
                   ? sourceConfig.coreMapping
                   : {},
@@ -359,19 +228,12 @@ export function* fetchCalendarConfigSaga({ payload }) {
             );
           }, Map());
 
-      // Parse Related Data
-      let relatedDataMapping;
-      if (config.relatedData) {
-        relatedDataMapping = fromJS(config.relatedData);
-      }
-
       // Parse Calendar Config data
       yield put(
         actions.fetchCalendarEvents({
           key: payload.key,
           sources,
           timezone: payload.timezone,
-          relatedDataMapping,
         }),
       );
       yield put(
@@ -379,7 +241,6 @@ export function* fetchCalendarConfigSaga({ payload }) {
           key: payload.key,
           sources,
           calendarConfig,
-          relatedDataMapping,
         }),
       );
     } else {
@@ -416,16 +277,6 @@ export function* fetchCalendarEventsSaga({ payload }) {
     );
   }
 
-  // Build related data resources
-  // TODO: Discuss if we should refactor to leverage prefetch parameter.
-  // payload.relatedDataMapping will be undefined after first call of the saga.
-  let relatedResources = {};
-  if (payload.relatedDataMapping) {
-    relatedResources = payload.relatedDataMapping.reduce((acc, source, key) => {
-      return getResources(acc, source, key);
-    }, {});
-  }
-
   // Build a map of bridge resources to get all sources' events.
   const resources = payload.sources.reduce((acc, source, key) => {
     const sourceMapping = source.get('source');
@@ -440,32 +291,7 @@ export function* fetchCalendarEventsSaga({ payload }) {
 
   // Make Bridge calls. The response is a JS Object of requested responses.
   // Each request responses has a unique key.
-  const response = yield all({ ...relatedResources, ...resources });
-
-  // Build Related Data from response.
-  let relatedData = {};
-  if (payload.relatedDataMapping) {
-    Object.keys(relatedResources).forEach(resourceKey => {
-      relatedData = {
-        ...relatedData,
-        [resourceKey]: response[resourceKey].records,
-      };
-      // Remove related data from response to prevent down stream errors
-      delete response[resourceKey];
-    });
-    // Keep related data in state for subsequent event fetches
-    yield put(
-      actions.setRelaterData({
-        key: payload.key,
-        relatedData: fromJS(relatedData),
-      }),
-    );
-  }
-  // Currently related data is only fetched on the first run of the calendar, but
-  // the related data is need on every event fetch.
-  relatedData = yield select(state =>
-    state.calendar.getIn([payload.key, 'relatedData']),
-  );
+  const response = yield all({ ...resources });
 
   // Combine all events from each source and reformat to the needs of the calendar.
   let events = Object.keys(response ? response : {}).reduce((acc, key) => {
@@ -479,25 +305,7 @@ export function* fetchCalendarEventsSaga({ payload }) {
       payload.sources.get(key).get('detailMapping'),
     );
 
-    // Get the relationships for the source
-    const relationships = payload.sources.get(key).get('relationships');
-
     let localEvents = response[key].records.map(event => {
-      // If there is related data merge it with events.
-      if (
-        relatedData &&
-        relatedData.size > 0 &&
-        relationships &&
-        relationships.size > 0
-      ) {
-        // The detailMapping identifies if related data is multi value.
-        event = mergeRelatedData(
-          event,
-          relatedData,
-          relationships,
-          detailMapping,
-        );
-      }
 
       const details = detailMapping.map(detail => {
         let value;
@@ -648,8 +456,6 @@ export function* fetchLocaleMetaTask() {
   );
 }
 
-// TODO: Move to react-kinetic-lib
-// const fetchLocales = () => axios.get(`${bundle.apiLocation()}/meta/locales`);
 const fetchTimezones = () =>
   axios.get(`${bundle.apiLocation()}/meta/timezones`);
 
