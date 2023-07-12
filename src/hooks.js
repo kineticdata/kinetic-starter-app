@@ -5,7 +5,9 @@ import {
   fetchKapp,
   fetchProfile,
   fetchSpace,
+  updateForm as formUpdate,
 } from '@kineticdata/react';
+import { call } from 'redux-saga/effects';
 
 export const useForm = (kappSlug, formSlug) => {
   const [form, setForm] = useState(null);
@@ -21,6 +23,17 @@ export const useForm = (kappSlug, formSlug) => {
 
   return form;
 };
+
+export const updateForm = async (kappSlug, formSlug, form) => {
+
+  const response = await call(formUpdate, {
+    kappSlug: kappSlug,
+    formSlug: formSlug,
+    form: { "description": form },
+  });
+
+  console.log('RESP', response)
+}
 
 export const useKapp = kappSlug => {
   const [kapp, setKapp] = useState(null);
