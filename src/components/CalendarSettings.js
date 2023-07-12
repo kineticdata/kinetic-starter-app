@@ -4,6 +4,7 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import { useForm } from '../hooks';
 import { Link, useParams } from 'react-router-dom';
 import { CALENDAR_KAPP_SLUG } from '../constants';
+import exampleConfig from './calendar/exampleConfig.json'
 
 export const CalendarSettings = () => {
   const kappSlug = CALENDAR_KAPP_SLUG;
@@ -18,64 +19,18 @@ export const CalendarSettings = () => {
   // keeping the JSON configuration.
 
 
-  const placeholder =
-  {
-    "name": "Calendar Name",
-    "description": "Calendar Description",
-    "defaultView": "Month",
-    "eventForm": {},
-    "newDateForm": {},
-    "relatedData ": {},
-    "sources": [{
-        "name": "Source Name",
-        "slug": "Source Slug",
-        "coreMapping": {
-            "title": ["Change Location"],
-            "start": "Scheduled Start Date",
-            "end": "Scheduled End Date"
-        },
-        "filterMapping": [{
-            "name": "Impact",
-            "value": "Impact",
-            "values": {}
-        }, {
-            "name": "Change Location",
-            "value": "Change Location",
-            "values": {}
-        }],
-        "source": {
-            "kappSlug": "calendar",
-            "formSlug": "test-calendar-1",
-            "bridgedResourceName": "By Start and End Date",
-            "parameters": {
-                "Start Date": {
-                    "fieldName": "Start Date"
-                },
-                "End Date": {
-                    "fieldName": "End Date"
-                }
-            }
-        },
-        "valid": true,
-        "detailMapping": {
-            "Id": "Id",
-            "Impact": "Impact",
-            "Change Location": "Change Location",
-            "Start Date": "Scheduled Start Date",
-            "End Date": "Scheduled End Date"
-        }
-    }]
-}
-
+  const placeholder = JSON.stringify(exampleConfig, null, 2);
+  
   return (
     <div className="row">
       <div className="col-8">
         <CodeEditor
-          value={code}
+          value={placeholder}
           language="json"
           placeholder={placeholder}
           onChange={evn => setCode(evn.target.value)}
           padding={15}
+          data-color-mode="dark"
           style={{
             fontSize: 12,
             backgroundColor: '#f5f5f5',

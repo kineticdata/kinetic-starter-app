@@ -49,7 +49,9 @@ export const Form = ({ edit, profile }) => {
 
   return (
     <div>
-      {profile.spaceAdmin && <Link to={`/calendar/${formSlug}/settings`}>Settings</Link>}
+      {profile && profile.spaceAdmin && (
+        <Link to={`/calendar/${formSlug}/settings`}>Settings</Link>
+      )}
       {id ? (
         <CoreForm
           submission={id}

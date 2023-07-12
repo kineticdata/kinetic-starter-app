@@ -1,0 +1,47 @@
+{
+    "name": "Calendar Name",
+    "description": "Calendar Description",
+    "defaultView": "Month",
+    "eventForm": {},
+    "newDateForm": {},
+    "relatedData ": {},
+    "sources": [{
+        "name": "Source Name",
+        "slug": "Source Slug",
+        "coreMapping": {
+            "title": ["Change Location"],
+            "start": "Scheduled Start Date",
+            "end": "Scheduled End Date"
+        },
+        "filterMapping": [{
+            "name": "Impact",
+            "value": "Impact",
+            "values": {}
+        }, {
+            "name": "Change Location",
+            "value": "Change Location",
+            "values": {}
+        }],
+        "source": {
+            "kappSlug": "calendar",
+            "formSlug": "test-calendar-1",
+            "bridgedResourceName": "By Start and End Date",
+            "parameters": {
+                "Start Date": {
+                    "fieldName": "Start Date"
+                },
+                "End Date": {
+                    "fieldName": "End Date"
+                }
+            }
+        },
+        "valid": true,
+        "detailMapping": {
+            "Id": "Id",
+            "Impact": "Impact",
+            "Change Location": "Change Location",
+            "Start Date": "Scheduled Start Date",
+            "End Date": "Scheduled End Date"
+        }
+    }]
+}

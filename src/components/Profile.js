@@ -18,11 +18,8 @@ const ChangePasswordField = props =>
     </div>
   );
 
-export const Profile = ({ profile, setCrumbs }) => {
+export const Profile = ({ profile }) => {
   const history = useHistory();
-
-  // clear navigation breadcrumbs on load
-  useEffect(() => setCrumbs([]), [setCrumbs]);
 
   // Form Saves
   const handleSave = useCallback(() => () => history.push('/'), [history]);

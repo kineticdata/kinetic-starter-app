@@ -60,7 +60,7 @@ export const CalendarList = () => {
           <h1>Calendars</h1>
           <div>
             {table}
-            {pagination}
+            {/* {pagination} */}
           </div>
         </>
       )}
