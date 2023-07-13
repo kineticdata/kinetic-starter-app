@@ -26,7 +26,7 @@ export const useForm = (kappSlug, formSlug) => {
 
 export const updateForm = async (kappSlug, formSlug, form) => {
 
-  const response = await call(formUpdate, {
+  const response = await formUpdate ({
     kappSlug: kappSlug,
     formSlug: formSlug,
     form: { "description": form },
