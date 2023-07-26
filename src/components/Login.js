@@ -1,24 +1,14 @@
-import React, { useCallback } from 'react';
-import { history } from '../index';
+import React from 'react';
 
 export const Login = ({
   error,
   onChangePassword,
   onChangeUsername,
-  onLogin,
+  onSso,
   password,
   pending,
-  redirect,
   username,
 }) => {
-  const onSubmit = useCallback(
-    event => {
-      const redirectCallback = redirect ? () => history.push('/') : null;
-
-      return onLogin(event, redirectCallback);
-    },
-    [onLogin, redirect],
-  );
 
   return (
     <div className="login__wrapper">
@@ -40,7 +30,7 @@ export const Login = ({
             onChange={onChangePassword}
             value={password}
           />
-          <button disabled={pending} type="submit" onClick={onSubmit}>
+          <button disabled={pending} type="submit" onClick={() => onSso()}>
             Login
           </button>
         </form>
