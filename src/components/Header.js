@@ -67,13 +67,13 @@ export const Header = ({ space, loggedIn, profile }) => (
         <Link className="header-link" to="/">
           <strong>Registration</strong>
         </Link>
-        <Link className="header-logo-link">
+        <Link className="header-logo-link" to="/">
           <i className="fa-brands fa-facebook-f" alt="Facebook logo" />
         </Link>
-        <Link className="header-logo-link">
+        <Link className="header-logo-link" to="/">
           <i className="fa-brands fa-x-twitter" alt="Twitter logo" />
         </Link>
-        <Link className="header-logo-link">
+        <Link className="header-logo-link" to="/">
           <i className="fa-brands fa-linkedin-in" alt="LinkedIn logo" />
         </Link>
       </div>
