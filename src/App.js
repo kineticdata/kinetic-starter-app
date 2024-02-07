@@ -4,6 +4,9 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { WallySpinner } from './components/Loading';
 import { Login } from './components/Login';
 import { Header } from './components/Header';
+import { Homepage } from './components/Homepage';
+import { Opportunities } from './components/Opportunities';
+import { ContactUs } from './components/ContactUs';
 import { Form } from './components/Form';
 import { FormList } from './components/FormList';
 import { KappList } from './components/KappList';
@@ -60,7 +63,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                 exact
               />
               <Route
-                path={['/', '/kapps']}
+                path={['/kapps']}
                 render={() => (
                   <KappList
                     setCrumbs={setBreadcrumbs}
@@ -94,6 +97,21 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
               <Route
                 path="/kapps/:kappSlug/forms/:formSlug/submissions/:id/edit"
                 render={() => <Form setCrumbs={setBreadcrumbs} edit />}
+                exact
+              />
+              <Route
+                path="/"
+                render={() => <Homepage/>}
+                exact
+              />
+              <Route
+                path="/opportunities"
+                render={() => <Opportunities/>}
+                exact
+              />
+              <Route
+                path="/contact-us"
+                render={() => <ContactUs/>}
                 exact
               />
               <Route component={NotFound} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { logout } from '@kineticdata/react';
-import kineticLogo from '../assets/kinetic-logo.png';
+import armyStar from '../assets/army_star.png';
 import { Link } from 'react-router-dom';
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
@@ -40,15 +40,48 @@ const HeaderDropdownMenu = ({ profile }) => {
 };
 
 export const Header = ({ space, loggedIn, profile }) => (
-  <header className="public">
-    <Link to="/">
-      <img src={kineticLogo} className="header-logo" alt="Kinetic Data logo" />
-    </Link>
-    <h1>{space ? space.name : 'Public'}</h1>
-    {loggedIn && (
-      <div className="buttons">
-        <HeaderDropdownMenu profile={profile} />
+  <header className="header">
+    <div className="header-centered">
+      <div className="header-logo-container">
+        <Link to="/">
+          <img src={armyStar} className="header-logo" alt="Kinetic Data logo" />
+        </Link>
+        <span className="header-title">Innovation Exchange</span>
       </div>
-    )}
+      <div className="header-nav">
+        <Link className="header-link" to="/">
+          <strong>Home</strong>
+        </Link>
+        <Link className="header-link" to="/about">
+          <strong>About</strong>
+        </Link>
+        <Link className="header-link" to="/opportunities">
+          <strong>Opportunities</strong>
+        </Link>
+        <Link className="header-link" to="/media">
+          <strong>Media</strong>
+        </Link>
+        <Link className="header-link" to="/contact-us">
+          <strong>Contact Us</strong>
+        </Link>
+        <Link className="header-link" to="/registration">
+          <strong>Registration</strong>
+        </Link>
+        <Link className="header-logo-link">
+          <i className="fa-brands fa-facebook-f" alt="Facebook logo" />
+        </Link>
+        <Link className="header-logo-link">
+          <i className="fa-brands fa-x-twitter" alt="Twitter logo" />
+        </Link>
+        <Link className="header-logo-link">
+          <i className="fa-brands fa-linkedin-in" alt="LinkedIn logo" />
+        </Link>
+      </div>
+      {/* {loggedIn && (
+        <div className="buttons">
+          <HeaderDropdownMenu profile={profile} />
+        </div>
+      )} */}
+    </div>
   </header>
 );

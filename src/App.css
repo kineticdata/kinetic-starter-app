@@ -16,11 +16,48 @@ body {
 
 /* Header */
 header {
-  align-items: center;
+  height: 5.625rem;
   display: flex;
+  justify-content: center;
   flex-direction: row;
-  padding: 1rem;
-  background-color: #f36c24;
+  background-color: #4B4F58;
+}
+
+.header-centered {
+  display: flex;
+  justify-content: space-between;
+  width: 1340px;
+  align-items: center;
+}
+
+.header-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header-link {
+  margin: 0;
+  padding: 1.25rem;
+  text-decoration: none;
+  font-size: .875rem;
+}
+
+.header-logo-link {
+  align-self: center;
+  padding: 0 .75rem 0 0;
+  text-decoration: none;
+  font-size: 1.375rem;
+}
+
+.header-title {
+  color: white;
+  font-size: 2.1875rem;
+  text-decoration: none;
 }
 
 .header-title-container {
@@ -36,7 +73,7 @@ header {
 
 header h1 {
   color: white;
-  font-size: 1.25rem;
+  font-size: 2.1875rem;
 }
 
 header a {
@@ -49,8 +86,8 @@ header .buttons {
 }
 
 .header-logo {
-  width: 12em;
-  margin-right: 3em;
+  width: 3.75rem;
+  padding-right: 1rem;
 }
 
 .dropdown-item {
