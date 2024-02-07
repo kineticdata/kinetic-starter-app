@@ -15,6 +15,7 @@ import { NotFound } from './components/NotFound';
 import { Profile } from './components/Profile';
 import { Users } from './components/Users';
 import { useProfile, useSpace } from './hooks';
+import { Footer } from './components/Footer';
 
 export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
   // breadcrumbs for navigation
@@ -31,7 +32,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
       <Header space={space} loggedIn={loggedIn} profile={profile} />
       {!initialized ? (
         <WallySpinner />
-      ) : loggedIn ? (
+      ) : (
         <div className="app-container">
           <nav>
             <ul className="breadcrumbs">
@@ -118,9 +119,8 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
             </Switch>
           </main>
         </div>
-      ) : (
-        <Login {...loginProps} />
       )}
+      <Footer />
       {timedOut && (
         <dialog open>
           <Login {...loginProps} />
