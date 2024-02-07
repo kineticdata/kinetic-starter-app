@@ -52,19 +52,19 @@ export const Header = ({ space, loggedIn, profile }) => (
         <Link className="header-link" to="/">
           <strong>Home</strong>
         </Link>
-        <Link className="header-link" to="/about">
+        <Link className="header-link" to="/">
           <strong>About</strong>
         </Link>
         <Link className="header-link" to="/opportunities">
           <strong>Opportunities</strong>
         </Link>
-        <Link className="header-link" to="/media">
+        <Link className="header-link" to="/">
           <strong>Media</strong>
         </Link>
         <Link className="header-link" to="/contact-us">
           <strong>Contact Us</strong>
         </Link>
-        <Link className="header-link" to="/registration">
+        <Link className="header-link" to="/">
           <strong>Registration</strong>
         </Link>
         <Link className="header-logo-link">
