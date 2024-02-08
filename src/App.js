@@ -52,6 +52,13 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
           <main>
             <Switch>
               <Route
+                path="/login"
+                render={() => (
+                  <Login {...loginProps}/>
+                )}
+                exact
+            />
+              <Route
                 path="/profile"
                 render={() => (
                   <Profile setCrumbs={setBreadcrumbs} profile={profile} />
@@ -107,7 +114,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
               />
               <Route
                 path="/opportunities"
-                render={() => <Opportunities/>}
+                render={() => <Opportunities loggedIn={loggedIn}/>}
                 exact
               />
               <Route

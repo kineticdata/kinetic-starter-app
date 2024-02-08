@@ -1,7 +1,48 @@
-import React from "react";
+import React, { useState, useEffect, forceUpdate } from "react";
 import '../assets/styles/opportunities.css';
+import { searchSubmissions, updateSubmission, defineKqlQuery } from '@kineticdata/react';
+import { Markdown } from '../widgets/markdown';
 
-export const Opportunities = () => {
+export const Opportunities = ({ loggedIn }) => {
+    const [submission, setSubmission] = useState(null);
+    const [editing, setEditing] = useState(0);
+    const [newMarkdown, setNewMarkdown] = useState('');
+ 
+    const updateMarkdown = () => {
+        setEditing(2);
+        const id = submission.id || null;
+        const values = {
+            'Markdown Field': newMarkdown
+        };
+
+        if (id) {
+            updateSubmission({ id, values })
+                .then(({ submission }) => {
+                    setEditing(0);
+                }
+            );
+        }
+    }
+
+    useEffect(() => {
+        if (editing === 0) {
+            const query = defineKqlQuery()
+            .equals('type', 'type')
+            .end();
+            searchSubmissions({
+            kapp: 'services',
+            form: 'technical-details',
+            search: {
+                q: query({ type: 'Content'}),
+                include: ['details', 'values'],
+                },
+            public: true,
+            }).then(({ submissions }) => {
+                setSubmission(submissions[0]);
+            });
+        }
+    }, [editing])
+
     return (
         <>
             <div className="page-header">
@@ -57,7 +98,7 @@ export const Opportunities = () => {
                                     for their data. The Unified Data Reference Architecture (UDRA) is intended to guide the implementation of interoperable data sharing across all Army acquisition programs.  
                                 </p>
                             </div>
-                            <div className="opportunity-item-double">
+                            <div className="opportunity-card-row">
                                 <div className="opportunity-item">
                                     <div className="opportunity-title-sm">
                                         <strong>
@@ -105,19 +146,19 @@ export const Opportunities = () => {
                                     To learn more about UDRA and better establish feasibility and approach of your solutions integration into our IEx platform, we recommend you review the following resources: 
                                 </p>
                                 <ul className="opportunity-text">
-                                    <li>
+                                    <li className="list-item">
                                         UDRA RFI Documentation 
                                     </li>
-                                    <li>
+                                    <li className="list-item">
                                         UDRA 1.0 Release (coming soon!) 
                                     </li>
-                                    <li>
+                                    <li className="list-item">
                                         UDRI Public APIs Documentation  
                                     </li>
-                                    <li>
+                                    <li className="list-item">
                                         Sample Backend Connector for Data Catalog  
                                     </li>
-                                    <li>
+                                    <li className="list-item">
                                         IEx Infrastructure & Entrance Criteria 
                                     </li>
                                 </ul>
@@ -128,20 +169,83 @@ export const Opportunities = () => {
                                 How it Works:
                             </strong>
                         </div>
-                        <div className="opportunity-item-double">
-                            <div className="card-yellow">
-
+                        <div className="opportunity-card-row">
+                            <div className="opportunity-card card-yellow">
+                                <div className="card-title">
+                                    Step 1
+                                </div>
+                                <div className="card-subtitle">
+                                    Company and Software Registration:
+                                </div>
+                                <ul className="card-list">
+                                    <li className="card-item">Provide your company’s details</li>
+                                    <li className="card-item">
+                                        Select a specific experimental offering within the IEx to showcase
+                                        your solution’s capabilities and adherence to the reference
+                                        architecture.
+                                    </li>
+                                    <li className="card-item">
+                                        Submit software specifications and relevant documents pertaining
+                                        to your solution.
+                                    </li>
+                                </ul>
                             </div>
-                            <div className="card-grey">
-                                
+                            <div className="opportunity-card card-blue">
+                                <div className="card-title">
+                                    Step 2
+                                </div>
+                                <div className="card-subtitle">
+                                    Evaluation, Technical Consultation, and Scheduling:
+                                </div>
+                                <ul className="card-list">
+                                    <li className="card-item">
+                                        Experimentation requests will be assessed through a review and
+                                        approval process to ensure the solution aligns with the desired
+                                        capabilities and service definitions per the reference architecture.
+                                    </li>
+                                    <li className="card-item">
+                                        Approved requests will proceed with addressing technical and
+                                        security integration requirements, followed by scheduling the
+                                        experimentation phase.
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div className="opportunity-item-double">
-                            <div className="card-grey">
-
+                        <div className="opportunity-card-row">
+                            <div className="opportunity-card card-blue">
+                                <div className="card-title">
+                                    Step 3
+                                </div>
+                                <div className="card-subtitle">
+                                    Deployment and Integration:
+                                </div>
+                                <ul className="card-list">
+                                    <li className="card-item">
+                                        Implement your software solution on the IEx platform.
+                                    </li>
+                                    <li className="card-item">
+                                        Engage in the experimentation phase, integrating your solution
+                                        with the reference implementation components and services.
+                                    </li>
+                                </ul>
                             </div>
-                            <div className="card-yellow">
-                                
+                            <div className="opportunity-card card-yellow">
+                                <div className="card-title">
+                                    Step 4
+                                </div>
+                                <div className="card-subtitle">
+                                    Demonstration and Feedback:
+                                </div>
+                                <ul className="card-list">
+                                    <li className="card-item">
+                                        Conduct a culminating technical demonstration for the IEx
+                                        government stakeholders, executing pre-defined use cases.
+                                    </li>
+                                    <li className="card-item">
+                                        Document and record the insights and lessons learned during the
+                                        process.
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <i className="fa-solid fa-exclamation big-icon"/>
@@ -155,6 +259,36 @@ export const Opportunities = () => {
                             Classified information or Privately held Intellectual Property or content.  Only provide what is already publicly available.
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="grey-bg">
+                <div className="centered-column">
+                    {loggedIn && (
+                        <button
+                            className="edit-md-btn"
+                            onClick={e => {
+                                if (editing === 0) {
+                                    setEditing(1);
+                                } else if (editing === 1) {
+                                    updateMarkdown(newMarkdown);
+                                }
+                            }}
+                            disabled={editing === 2 ? true : false}
+                        >
+                            {editing === 0 ? 'Edit'
+                                : editing === 1 ? 'Update'
+                                : editing === 2 ? 'Updating...'
+                                : null}
+                        </button>
+                    )}
+                    {submission && (
+                        <Markdown
+                            key={submission.updatedAt}
+                            initialValue={submission.values['Markdown Field'] || ''}
+                            disabled={editing === 0 ? true : false}
+                            updateMarkdown={setNewMarkdown}
+                        />
+                    )}
                 </div>
             </div>
         </>
