@@ -34,7 +34,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
         <WallySpinner />
       ) : (
         <div className="app-container">
-          <nav>
+          {/* <nav>
             <ul className="breadcrumbs">
               {breadcrumbs &&
                 breadcrumbs.map((breadcrumb, idx) => (
@@ -48,9 +48,16 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
                   </li>
                 ))}
             </ul>
-          </nav>
+          </nav> */}
           <main>
             <Switch>
+              <Route
+                path="/login"
+                render={() => (
+                  <Login {...loginProps}/>
+                )}
+                exact
+            />
               <Route
                 path="/profile"
                 render={() => (
@@ -107,7 +114,7 @@ export const App = ({ initialized, loggedIn, loginProps, timedOut }) => {
               />
               <Route
                 path="/opportunities"
-                render={() => <Opportunities/>}
+                render={() => <Opportunities loggedIn={loggedIn}/>}
                 exact
               />
               <Route

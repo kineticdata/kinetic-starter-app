@@ -1,0 +1,184 @@
+/* Opportunities Page Styling */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.centered-column {
+    max-width: 1340px;
+    width: 1340px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container {
+  margin-top: 6.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  font-size: 1.75rem;
+}
+
+.content-title {
+  margin-top: 1rem;
+  color: black;
+  font-size: 1.75rem;
+}
+
+.content-subtitle {
+  color: #4B4F58;
+  font-size: 1.25rem;
+}
+
+.content-title-underline {
+  margin: 20px 0 10px 0;
+  width: 96px;
+  border: 3px solid #dd9933;
+}
+
+.opportunities-container {
+  margin-top: 2rem;
+  align-self: center;
+  width: 1340px;
+}
+
+.opportunity-item-double {
+  display: flex;
+  justify-content: space-between;
+}
+
+.opportunity-item-right {
+  padding-left: 1rem;
+}
+
+.opportunity-title-med {
+  height: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: #4B4F58;
+}
+
+.opportunity-title-sm {
+  height: 1.5rem;
+  margin: 1rem 0 1.5rem 0;
+  font-size: 1rem;
+  font-style: italic;
+  color: #4B4F58;
+}
+
+.opportunity-text {
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+}
+
+.list-item {
+  line-height: 1.375rem;
+}
+
+.opportunity-text-centered {
+  margin: 1rem 0 1.5rem 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.opportunity-signup-btn {
+  margin: 0 0 2rem 0;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 2rem;
+  background-color: #fbc70a;
+  color: #3a3a3a;
+}
+
+/* Card Syles */
+.opportunity-card-row {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.opportunity-card {
+  padding: 2rem;
+  width: 36.75rem;
+  height: 18rem;
+}
+
+.card-yellow {
+  background-color: #FFE97D;
+}
+
+.card-blue {
+  background-color: #F2F5F7;
+}
+
+.card-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.card-subtitle {
+  font-size: 1.125rem;
+  font-weight: bold;
+  border-bottom: 3px solid black;
+  margin-bottom: 1.5rem;
+}
+
+.card-list {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.card-item {
+  margin: .75rem 0;
+  line-height: 1.75rem;
+}
+
+/* Other Styles */
+.big-icon {
+  margin-top: 2.5rem;
+  font-size: 2.5rem;
+}
+
+.grey-bg {
+  background-color: #EBEBEB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #4B4F58;
+}
+
+.grey-bg h2 {
+  font-size: 2rem;
+  border: none;
+  color: #000000;
+}
+
+.grey-bg h6 {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.grey-bg p {
+  font-size: 1rem;
+  line-height: 2.5rem;
+}
+
+.edit-md-btn {
+  align-self: flex-end;
+  margin: .5rem 0 .5rem 0;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 2rem;
+  background-color: #fbc70a;
+  color: #3a3a3a;
+}
+
+.edit-md-btn:disabled {
+  background-color: #EBEBEB;
+}
